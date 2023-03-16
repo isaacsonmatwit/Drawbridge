@@ -1,0 +1,12 @@
+body {
+    margin:0;
+}
+
+li {
+    list-style: none;
+}
+
+aside {
+    width:20%;
+    background-color: red;
+}
