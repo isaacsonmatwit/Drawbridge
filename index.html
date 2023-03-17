@@ -48,5 +48,24 @@
             </li>
         </ul>
     </aside>
+    <div class="Column">
+        <input type="text" id="txtName" />
+        <input type="button" id="btnCopy" value="Send" onclick="CopyToLabel()" />
+        <hr />
+  
+        <textarea id="mytextarea"></textarea>
+      </div>
+      <script type="text/javascript">
+        function CopyToLabel() {
+          //Reference the TextBox.
+          var txtName = document.getElementById("txtName");
+  
+          //Reference the Label.
+          document.getElementById("mytextarea").innerHTML +=
+            "&#13;&#10; You: " + txtName.value;
+  
+          //Copy the TextBox value to Label.
+        }
+      </script>
 </body>
 </html>
