@@ -16,16 +16,18 @@ li div {
 
 li img {
     border-radius:50%;
+    float:left;
     width:20%;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
 }
 
 ul {
     margin:0;
     padding:0;
-}
-
-li img {
-    margin:0;
 }
 
 aside {
@@ -35,14 +37,22 @@ aside {
     background-color: red;
 }
 
-/* .user {
+.user {
     background-color: blue;
-} */
+    height: 75px;
+    position: relative;
+}
 
 .about {
     background-color: green;
     padding:0;
-    margin:0;
+    float:left;
+    margin: 0;
+    margin-left:55px;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
 }
 
 .name {
