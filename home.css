@@ -54,3 +54,22 @@ aside {
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
 }
+textarea {
+    width: 500px;
+    height: 300px;
+    font-size: 18px;
+    margin-left: 20px;
+}
+.column{
+  display: inline-block;
+  border: red;
+  border-width: 8px;
+}
+
+hr{
+    margin: 25px;
+}
+
+#txtName{
+    margin-left: 20px;
+}
