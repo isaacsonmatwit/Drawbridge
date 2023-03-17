@@ -2,6 +2,7 @@ body {
     margin:0;
     padding:0;
     background-color: #222;
+    color:white;
 }
 
 li {
@@ -34,17 +35,16 @@ aside {
     margin:0;
     width:25%;
     padding:0;
-    background-color: red;
+    color:white;
+    border:solid gray 3px;
 }
 
 .user {
-    background-color: blue;
     height: 75px;
     position: relative;
 }
 
 .about {
-    background-color: green;
     padding:0;
     float:left;
     margin: 0;
@@ -53,12 +53,4 @@ aside {
     top: 50%;
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
-}
-
-.name {
-    background-color: yellow;
-}
-
-.status {
-    background-color: indigo;
 }
