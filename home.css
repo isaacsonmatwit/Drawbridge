@@ -1,9 +1,9 @@
-/* body {
+ body {
     margin:0;
     padding:0;
-    background-color: #222;
+    background-color: #524c4c;
     color:white;
-} */
+} 
 
 li {
     list-style: none;
@@ -61,8 +61,8 @@ textarea {
     font-size: 18px;
     margin-left: 20px; */
     margin: 40px;
-    width: calc(100vw - 380px);
-    height: calc(100vh - 380px);
+    width: calc(100vw - 445px);
+    height: calc(100vh - 350px);
     resize: none;
 }
 
@@ -85,7 +85,7 @@ hr{
     padding-top: 20px;
 }
 .msg-main{
-    margin-left: 270px;
+    margin-left: 300px;
 }
 
 h1{
@@ -103,19 +103,19 @@ img {
 /* Styling the msg-header container */
 .msg-header {
     border: 1px solid #ccc;
-    width: 100%;
+    width: 97%;
     height: 10%;
     border-bottom: none;
     display: inline-block;
     background-color: #e1e0e0;
-    margin: 0;
+    margin: 0px;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
 }
 
 .msg-Send{
     border: 1px solid #ccc;
-    width: 100%;
+    width: 97%;
     background-color: #efefef;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
