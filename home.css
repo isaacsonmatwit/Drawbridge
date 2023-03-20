@@ -1,9 +1,9 @@
-body {
+/* body {
     margin:0;
     padding:0;
     background-color: #222;
     color:white;
-}
+} */
 
 li {
     list-style: none;
@@ -61,11 +61,6 @@ textarea {
     font-size: 18px;
     margin-left: 20px;
 }
-.column{
-  display: inline-block;
-  border: red;
-  border-width: 8px;
-}
 
 hr{
     margin: 25px;
@@ -73,4 +68,24 @@ hr{
 
 #txtName{
     margin-left: 20px;
+}
+
+.sidebar{
+    height: 100%;
+    width: 270px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #222;
+    padding-top: 20px;
+   
+
+}
+.messenger{
+    margin-left: 270px;
+}
+
+h1{
+    text-align: center;
 }

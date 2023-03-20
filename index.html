@@ -1,74 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="home.css" />
     <script src="sendMessage.js"></script>
 </head>
+
 <body>
     <h1>Welcome to Drawbridge!</h1>
-    <aside class="users">
-        <ul class="userlist">
-            <li class="user">
-                <img src="images/arthur.png" alt="avatar">
-                <div class="about">
-                    <div class="name">Arthur Morgan</div>
-                    <div class="status"> <i> left 10 hours ago </i></div>
-                </div>
-            </li>
-            <li class="user">
-                <img src="images/dutch.png" alt="avatar">
-                <div class="about">
-                    <div class="name">Dutch Van Der Linde</div>
-                    <div class="status"> <i>Here now</i></div>
-                </div>
-            </li>
-            <li class="user">
-                <img src="images/john.png" alt="avatar">
-                <div class="about">
-                    <div class="name">John Marston</div>
-                    <div class="status"> <i> left 6 hours ago</i></div>
-                </div>
-            </li>
-            <li class="user">
-                <img src="images/micah.png" alt="avatar">
-                <div class="about">
-                    <div class="name">Micah Bell</div>
-                    <div class="status"> <i>Here now</i></div>
-                </div>
-            </li>
-            <li class="user">
-                <img src="images/javier.png" alt="avatar">
-                <div class="about">
-                    <div class="name">Javier Escuella</div>
-                    <div class="status"> <i> left 4 hours ago </i></div>
-                </div>
-            </li>
-        </ul>
-    </aside>
-    <div class="Column">
-        
-        <hr />
-  
+    <div class="sidebar">
+        <aside class="users">
+            <ul class="userlist">
+                <li class="user">
+                    <img src="images/arthur.png" alt="avatar" />
+                    <div class="about">
+                        <div class="name">Arthur Morgan</div>
+                        <div class="status"><i> left 10 hours ago </i></div>
+                    </div>
+                </li>
+                <li class="user">
+                    <img src="images/dutch.png" alt="avatar" />
+                    <div class="about">
+                        <div class="name">Dutch Van Der Linde</div>
+                        <div class="status"><i>Here now</i></div>
+                    </div>
+                </li>
+                <li class="user">
+                    <img src="images/john.png" alt="avatar" />
+                    <div class="about">
+                        <div class="name">John Marston</div>
+                        <div class="status"><i> left 6 hours ago</i></div>
+                    </div>
+                </li>
+                <li class="user">
+                    <img src="images/micah.png" alt="avatar" />
+                    <div class="about">
+                        <div class="name">Micah Bell</div>
+                        <div class="status"><i>Here now</i></div>
+                    </div>
+                </li>
+                <li class="user">
+                    <img src="images/javier.png" alt="avatar" />
+                    <div class="about">
+                        <div class="name">Javier Escuella</div>
+                        <div class="status"><i> left 4 hours ago </i></div>
+                    </div>
+                </li>
+            </ul>
+        </aside>
+    </div>
+    <div class="messenger">
         <textarea id="mytextarea"></textarea>
-        <hr />
+        <hr>
         <input type="text" id="txtName" />
         <input type="button" id="btnCopy" value="Send" onclick="CopyToLabel()" />
-      </div>
-      <!-- <script type="text/javascript">
-        function CopyToLabel() {
-          //Reference the TextBox.
-          var txtName = document.getElementById("txtName");
-  
-          //Reference the Label.
-          document.getElementById("mytextarea").innerHTML +=
-            "&#13;&#10; You: " + txtName.value;
-  
-          //Copy the TextBox value to Label.
-        }
-      </script> -->
+    </div>
 </body>
+
 </html>
