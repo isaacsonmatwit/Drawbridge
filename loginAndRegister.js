@@ -1,3 +1,9 @@
+const express = require('express');
+const sqlite = require('sqlite')
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
+const app = express();
+
 var check = function () {
   if (document.getElementById('password').value == "") {
   } else if (document.getElementById('password').value ==
@@ -29,3 +35,18 @@ function savePWandusrname() {
   let passwordValue = document.getElementById('password')
   let usernameValue = document.getElementById()
 }
+
+app.post('/register', async (req, res) => {
+  await db.run(`
+  CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT UNIQUE,
+    password TEXT
+  )`);
+  const username = req.body.username;
+  const password = req.body.password;
+
+  await db.run(`
+    INSERT INTO users (username, password) VALUES (?, ?)
+  `, [username, password]);
+});
