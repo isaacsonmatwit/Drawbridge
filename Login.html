@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DRAWBRIDGE</title>
     <link rel="stylesheet" href="loginAndRegister.css" />
+    <script src="loginAndRegister.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
@@ -13,9 +14,11 @@
 <body>
     <h1>DRAWBRIDGE</h1>
     <form id="form">
-        <input type="text" class="input userName" placeholder="username"/>
+        <input type="text" id="userName" class="input userName" placeholder="username" />
         <br>
-        <input type="password" class="input Password" placeholder="password"/>
+        <input type="password" id="password" class="input Password" placeholder="password" onkeyup='check();' />
+        <input type="checkbox" onclick='togglePW()'>
+        <div class="showPW"><strong>Show Password</strong></div>
         <br>
         <a href="index.html"><button type="input submit">Submit</button></a>
         <br>

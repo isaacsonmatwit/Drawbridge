@@ -1,6 +1,7 @@
 body {
     text-align: center;
     background-color: #273040;
+    
 }
 
 img {
@@ -68,4 +69,9 @@ a:link {
   /* selected link */
   a:active {
     color: #EC9A29;
+  }
+
+  .showPW{
+    color:#DAD2D8;
+    font-family: Roboto Mono;
   }
