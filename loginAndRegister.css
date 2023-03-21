@@ -31,7 +31,6 @@ button {
     padding:5px;
     border-radius:2px;
     margin-top:15px;
-    margin-bottom: 15px;
 }
 
 button:hover {
@@ -49,7 +48,6 @@ form {
 a{
     color:#DAD2D8;
     font-family: Roboto Mono;
-    text-decoration: none;
 }
 
 a:link {

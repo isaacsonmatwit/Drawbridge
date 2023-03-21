@@ -3,16 +3,18 @@
 
 /* Set the width of the sidebar to 250px and the left margin of the page content to 250px */
 function openNav() {
-    document.getElementById("mySidebar").style.width = "250px";
-    document.getElementById("main").style.marginLeft = "250px";
-    document.getElementById("header").style.marginLeft = "250px";
+    document.getElementById("mySidebar").style.width = "270px";
+    document.getElementById("main").style.marginLeft = "300px";
+    document.getElementById("header").style.marginLeft = "300px";
     document.getElementById("mySidebar").style.visibility = "visible";   
+    document.getElementById("openbtn").style.visibility = "hidden";   
   }
   
   /* Set the width of the sidebar to 0 and the left margin of the page content to 0 */
   function closeNav() {
     document.getElementById("mySidebar").style.width = "0";
-    document.getElementById("main").style.marginLeft = "0";
-    document.getElementById("header").style.marginLeft = "0";
+    document.getElementById("main").style.marginLeft = "30px";
+    document.getElementById("header").style.marginLeft = "30px";
     document.getElementById("mySidebar").style.visibility = "hidden";   
+    document.getElementById("openbtn").style.visibility = "visible";   
   } 
