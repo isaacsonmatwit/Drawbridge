@@ -3,6 +3,9 @@ body {
     background-color: #273040;   
 }
 
+span {
+    font-family: Roboto Mono;
+}
 img {
     width:250px;
 }
@@ -33,8 +36,7 @@ input {
     margin-bottom: 15px;
 }
 
-
-button {
+.submitBut {
     background-color: #0F8B8D;
     color:white;
     border:none;
@@ -44,11 +46,11 @@ button {
     margin-bottom:15px;
 }
 
-button:hover {
+.submitBut:hover {
     background-color: #71a7a9;
 }
 
-button:active {
+.submitBut:active {
     background-color: #EC9A29;
 }
 
