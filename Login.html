@@ -17,10 +17,12 @@
         <input type="text" id="userName" class="input userName" placeholder="username" />
         <br>
         <input type="password" id="password" class="input Password" placeholder="password" onkeyup='check();' />
-        <input type="checkbox" onclick='togglePW()'>
-        <div class="showPW"><strong>Show Password</strong></div>
+        <div class="showPW">
+            <strong>Show Password</strong>
+            <input class="pwbutton" type="checkbox" onclick='togglePW()'>
+        </div>
         <br>
-        <a href="index.html"><button type="input submit">Submit</button></a>
+        <a href="index.html"><button class="submitBut" type="input submit">Submit</button></a>
         <br>
         <a href="register.html">Register</a>
     </form>

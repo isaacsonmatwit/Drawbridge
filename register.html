@@ -21,12 +21,15 @@
             <input type="text" id="userName" class="input userName" placeholder="username" />
             <br>
             <input type="password" id="password" class="input Password" placeholder="password" onkeyup='check();' />
-            <input type="checkbox" onclick='togglePW()'>
-            <div class="showPW"><strong>Show Password</strong></div>
+            <div class="showPW">
+                <strong>Show Password</strong>
+                <input type="checkbox" onclick='togglePW()'>
+            </div>
             <br>
             <input type="password" id="passwordConfirm" class="input Password confirm" placeholder="confirm password"
                 onkeyup='check();' />
-            <span id='checker'></span>
+                <br>
+            <span class="checker" id='checker'>Enter your password</span>
             <br>
             <button type="input submit">Submit</button>
             <br>

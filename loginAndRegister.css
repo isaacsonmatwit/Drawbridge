@@ -1,7 +1,6 @@
 body {
     text-align: center;
-    background-color: #273040;
-    
+    background-color: #273040;   
 }
 
 img {
@@ -25,6 +24,16 @@ input {
     border-radius: 2px;
 }
 
+.pwbutton {
+    text-align: none;       
+}
+
+.checker {
+    color:white;
+    margin-bottom: 15px;
+}
+
+
 button {
     background-color: #0F8B8D;
     color:white;
@@ -32,6 +41,7 @@ button {
     padding:5px;
     border-radius:2px;
     margin-top:15px;
+    margin-bottom:15px;
 }
 
 button:hover {
@@ -46,7 +56,7 @@ form {
     margin-bottom:50px;
 }
 
-a{
+a {
     color:#DAD2D8;
     font-family: Roboto Mono;
 }
