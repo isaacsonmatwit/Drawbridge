@@ -22,3 +22,8 @@ var check = function() {
         confirmPasswordField.type = "password";
     }
 }
+
+function savePWandusrname(){
+  let passwordValue = document.getElementById('password')
+  let usernameValue = document.getElementById()
+}
