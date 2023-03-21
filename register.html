@@ -1,29 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DrawBridge Registration</title>
     <link rel="stylesheet" href="loginAndRegister.css" />
-    <style>
-        body {
-            text-align: center;
-        }
-    </style>
+    <script src="loginAndRegister.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
+
 </head>
+
 <body>
-    <h1>DrawBridge Registration</h1>
-    <form id="form">
-        <input type="text" class="input userName" placeholder="username"/>
-        <br>
-        <input type="text" class="input Password" placeholder="password"/>
-        <br>
-        <input type="text" class="input Password confirm" placeholder="confirm password"/>
-        <br>
-        <button type="input submit">Submit</button>
-        <br>
-    </form>
-    <script src="names.js"></script>
+    <div class="main">
+        <h1>DRAWBRIDGE</h1>
+        <form id="form">
+            <input type="text" id="userName" class="input userName" placeholder="username" />
+            <br>
+            <input type="password" id="password" class="input Password" placeholder="password" onkeyup='check();' />
+            <input type="checkbox" onclick='togglePW()'>
+            <div class="showPW"><strong>Show Password</strong></div>
+            <br>
+            <input type="password" id="passwordConfirm" class="input Password confirm" placeholder="confirm password"
+                onkeyup='check();' />
+            <span id='checker'></span>
+            <br>
+            <button type="input submit">Submit</button>
+            <br>
+        </form>
+        <script src="names.js"></script>
+    </div>
 </body>
+
 </html>

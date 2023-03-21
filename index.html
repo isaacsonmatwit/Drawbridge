@@ -5,17 +5,26 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Drawbridge messenger</title>
     <link rel="stylesheet" href="home.css" />
     <script src="sendMessage.js"></script>
+    <script src="sideBar.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <h1>Welcome to Drawbridge!</h1>
-    <div class="sidebar">
+    <div id="header" class="header">
+        <!-- used this for sidebar open and close https://www.w3schools.com/howto/howto_js_collapse_sidebar.asp -->
+        <button class="openbtn" id="openbtn" onclick="openNav()">&#9776; Open Sidebar</button>
+        <h1>Welcome to Drawbridge!</h1>
+    </div>
+    <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <aside class="users">
             <ul class="userlist">
-                <li class="user">
+                <li class="user top">
                     <img src="images/arthur.png" alt="avatar" />
                     <div class="about">
                         <div class="name">Arthur Morgan</div>
@@ -54,7 +63,7 @@
         </aside>
     </div>
 
-    <div class="msg-main">
+    <div id="main" class="msg-main">
         <div class="msg-header">
             <div class="container1">
 
@@ -66,7 +75,7 @@
         </div>
 
         <div class="msg-Send">
-            <textarea id="mytextarea"></textarea>
+            <textarea id="mytextarea" readonly></textarea>
             <hr>
             <input type="text" id="txtSend" />
             <input type="button" id="btnSend" value="Send" onclick="CopyToLabel()" />

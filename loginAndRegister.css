@@ -1,3 +1,77 @@
+body {
+    text-align: center;
+    background-color: #273040;
+    
+}
+
+img {
+    width:250px;
+}
+
+h1 {
+    font-family: Roboto Mono;
+    color:white;
+}
+
 .input {
     margin: 10px;
 }
+
+input {
+    background-color: #49505e;
+    color:white;
+    border:none;
+    padding:5px;
+    border-radius: 2px;
+}
+
+button {
+    background-color: #0F8B8D;
+    color:white;
+    border:none;
+    padding:5px;
+    border-radius:2px;
+    margin-top:15px;
+}
+
+button:hover {
+    background-color: #71a7a9;
+}
+
+button:active {
+    background-color: #EC9A29;
+}
+
+form {
+    margin-bottom:50px;
+}
+
+a{
+    color:#DAD2D8;
+    font-family: Roboto Mono;
+}
+
+a:link {
+    color: #DAD2D8;
+    
+  }
+  
+  /* visited link */
+  a:visited {
+    color: #DAD2D8;
+  }
+  
+  /* mouse over link */
+  a:hover {
+    color: #0F8B8D;
+  }
+  
+  /* selected link */
+  a:active {
+    color: #EC9A29;
+  }
+
+  .showPW{
+    color:#DAD2D8;
+    font-family: Roboto Mono;
+  }
