@@ -1,9 +1,21 @@
+ /* COLORS: DARK #273040,  LIGHT #DAD2D8, ACCENT #0F8B8D, WARNING #EC9A29, ERROR #AF0C0C  */
  body {
      margin: 0;
      padding: 0;
      background-color: #524c4c;
      color: white;
  }
+
+ header {
+    background-color: #273040;
+    padding-top:15px;
+    width:auto;
+    margin-left:290px;
+    margin-bottom: 10px;
+    padding-left:10px;
+    padding-bottom: 5px;
+    font-family: Roboto Mono;
+}
 
  li {
      list-style: none;
@@ -32,19 +44,19 @@
  }
 
  aside {
-     margin: 0;
-     width: 250px;
-     padding: 0;
-     color: white;
-     border: solid gray 3px;
-     margin-bottom: 50px;
- }
+    margin:0;
+    width:100%;
+    color:white;
+}
 
  .user {
      height: 75px;
      position: relative;
  }
 
+ .user:hover{
+    background-color: #524c4c;
+}
 
  .about {
      padding: 0;
@@ -77,14 +89,16 @@
  }
 
  .sidebar {
-     height: 100%;
-     width: 270px;
-     position: fixed;
-     z-index: 1;
-     top: 0;
-     left: 0;
-     background-color: #222;
-     padding-top: 20px;
+    height: 100%;
+    width: 270px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #222;
+    padding: 10px;
+    font-family: Roboto Mono;
+    font-size: 10pt;
  }
 
  .sidebar .closebtn {
@@ -93,6 +107,7 @@
     right: 25px;
     font-size: 36px;
     margin-left: 50px;
+    margin-bottom:15px;
   }
 
  .msg-main {
@@ -103,8 +118,6 @@
  h1 {
      text-align: center;
  }
-
-
 
  img {
      width: 50px;
