@@ -12,6 +12,7 @@ function check() {
   } else if (pwd.value == pwdConfirm.value) {
     checker.style.color = 'green';
     checker.innerHTML = 'matching';
+    return true;
   } else {
     checker.style.color = 'red';
     checker.innerHTML = 'not matching';
@@ -50,40 +51,48 @@ app.post('/register', async (req, res) => {
 
 function checkPWComplexity() {
   let passwordField = document.getElementById('password').value;
-  let strongPassword = new RegExp('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})');
-  
+
   if (passwordField.length >= 8) {
     document.getElementById('pwLength').style.color = 'green';
-  }else{
+  } else {
     document.getElementById('pwLength').style.color = '#AF0C0C';
   }
 
   if (passwordField.match(/[a-z]/)) {
     document.getElementById('pwLowerCase').style.color = 'green';
-  }else{
+  } else {
     document.getElementById('pwLowerCase').style.color = '#AF0C0C';
   }
 
   if (passwordField.match(/[A-Z]/)) {
     document.getElementById('pwUpperCase').style.color = 'green';
-  }else{
+  } else {
     document.getElementById('pwUpperCase').style.color = '#AF0C0C';
   }
 
   if (passwordField.match(/\d/)) {
     document.getElementById('pwNumbers').style.color = 'green';
-  }else{
+  } else {
     document.getElementById('pwNumbers').style.color = '#AF0C0C';
   }
 
   if (passwordField.match(/[^a-zA-Z\d]/)) {
     document.getElementById('pwSpecialChar').style.color = 'green';
-  }else{
+  } else {
     document.getElementById('pwSpecialChar').style.color = '#AF0C0C';
   }
 
-  // if (passwordField.match(strongPassword)) {
-  //   window.location.replace("index.html");
-  // }
-  
+
+}
+
+function registerSubmitBtn() {
+  let passwordField = document.getElementById('password').value;
+  let strongPassword = new RegExp('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})');
+
+  if (passwordField.match(strongPassword)) {
+    if (check()) {
+      window.location.replace("index.html");
+    }
+
+  }
 }
