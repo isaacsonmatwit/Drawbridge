@@ -72,6 +72,7 @@ p {
      width: calc(100vw - 445px);
      height: calc(100vh - 350px);
      resize: none;
+     transition: .5s;
  }
 
  hr {
@@ -178,6 +179,7 @@ p {
      height: 50px;
      font-size: large;
      margin-left: 40px;
+     transition: .5s;
  }
 
  #btnSend {
