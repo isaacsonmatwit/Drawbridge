@@ -87,11 +87,14 @@ function checkPWComplexity() {
 
 function registerSubmitBtn() {
   let passwordField = document.getElementById('password').value;
+  let userNameField = document.getElementById('username').value;
   let strongPassword = new RegExp('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})');
 
   if (passwordField.match(strongPassword)) {
     if (check()) {
-      window.location.replace("index.html");
+      if(userNameField != 0){
+        window.location.replace("index.html");
+      }
     }
 
   }
