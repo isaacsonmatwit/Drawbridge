@@ -20,14 +20,15 @@
         <form id="form" action="/register" method="post">
             <input type="text" id="username" class="input userName" placeholder="username" />
             <br>
-            <input type="password" id="password" class="input Password" placeholder="password" onkeyup='checkPWComplexity();'/>
+            <input type="password" id="password" class="input Password" placeholder="password"
+                onkeyup="checkPWComplexity()" />
             <div class="showPW">
                 <strong>Show Password</strong>
                 <input type="checkbox" onclick='togglePW()'>
             </div>
             <br>
             <input type="password" id="passwordConfirm" class="input Password confirm" placeholder="confirm password"
-                onkeyup='check();' />
+                onkeyup='check()' />
             <br>
             <span class="checker" id='checker'>Enter your password</span>
             <br>
