@@ -47,3 +47,32 @@ app.post('/register', async (req, res) => {
     INSERT INTO users (username, password) VALUES (?, ?)
   `, [username, password]);
 });
+
+function checkPWComplexity() {
+  let passwordField = document.getElementById('password');
+  let strongPassword = new RegExp('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})');
+
+  if (passwordField.length >= 8) {
+    document.getElementById('pwLength').style.color = 'green';
+  }
+
+  if (passwordField.match(/a-z/)) {
+    document.getElementById('pwLowerCase').style.color = 'green';
+  }
+
+  if (passwordField.match(/A-Z/)) {
+    document.getElementById('pwUpperCase').style.color = 'green';
+  }
+
+  if (passwordField.match(/\d/)) {
+    document.getElementById('pwNumbers').style.color = 'green';
+  }
+
+  if (passwordField.match(/[^a-zA-Z\d]/)) {
+    document.getElementById('pwSpecialChar').style.color = 'green';
+  }
+
+  if (passwordField.match(strongPassword)) {
+    window.location.replace("index.html");
+  }
+}
