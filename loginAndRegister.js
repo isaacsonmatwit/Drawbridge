@@ -1,25 +1,27 @@
 const express = require('express');
 const sqlite = require('sqlite')
 const bodyParser = require('body-parser');
-app.use(bodyParser.json());
 const app = express();
+app.use(bodyParser.json());
 
-var check = function () {
-  if (document.getElementById('password').value == "") {
-  } else if (document.getElementById('password').value ==
-    document.getElementById('passwordConfirm').value) {
-    document.getElementById('checker').style.color = 'green';
-    document.getElementById('checker').innerHTML = 'matching';
+function check() {
+  let pwd = document.getElementById('password');
+  let pwdConfirm = document.getElementById('passwordConfirm');
+  let checker = document.getElementById('checker');
+  if (pwd.value == "") {
+  } else if (pwd.value == pwdConfirm.value) {
+    checker.style.color = 'green';
+    checker.innerHTML = 'matching';
   } else {
-    document.getElementById('checker').style.color = 'red';
-    document.getElementById('checker').innerHTML = 'not matching';
+    checker.style.color = 'red';
+    checker.innerHTML = 'not matching';
   }
 
 }
 
 function togglePW() {
-  var passwordField = document.getElementById("password");
-  var confirmPasswordField = document.getElementById("passwordConfirm");
+  let passwordField = document.getElementById("password");
+  let confirmPasswordField = document.getElementById("passwordConfirm");
 
   if (passwordField.type === "password") {
     passwordField.type = "text";
@@ -29,11 +31,6 @@ function togglePW() {
     passwordField.type = "password";
     confirmPasswordField.type = "password";
   }
-}
-
-function savePWandusrname() {
-  let passwordValue = document.getElementById('password')
-  let usernameValue = document.getElementById()
 }
 
 app.post('/register', async (req, res) => {
