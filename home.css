@@ -6,11 +6,6 @@
      color: white;
  }
 
- .header {
-    width:auto;
-    font-family: Roboto Mono;
-}
-
 p {
     font-family: Roboto Mono;
 }
@@ -68,7 +63,7 @@ p {
  }
 
  textarea {
-     margin: 40px;
+     margin: 30px;
      width: calc(100vw - 445px);
      height: calc(100vh - 350px);
      resize: none;
@@ -222,3 +217,26 @@ p {
   a:active {
     color: #EC9A29;
   }
+
+  .signOutBtn {
+    margin-left: 300px;
+  }
+
+  .headerContainer{
+    display: inline-block;
+  }
+
+  .welcomeText{
+    text-align: center;
+  }
+
+  .buttons{
+    text-align: left;
+    font-family: Roboto Mono;
+  }
+  
+  /* .header {
+    width:auto;
+    
+    text-align: center;
+} */

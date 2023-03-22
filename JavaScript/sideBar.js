@@ -22,6 +22,7 @@ function openNav() {
     document.getElementById("openbtn").style.visibility = "visible";   
     document.getElementById("mytextarea").style.width = "calc(100vw - 175px)";
     document.getElementById("txtSend").style.width = "calc(100vw - 275px)";
+    document.getElementById("signOutBtn").style.margin = "0";
   } 
 
   function signOutBtn() {

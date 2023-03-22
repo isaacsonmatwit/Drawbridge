@@ -17,10 +17,14 @@
 <body>
     <div id="header" class="header">
         <!-- used this for sidebar open and close https://www.w3schools.com/howto/howto_js_collapse_sidebar.asp -->
-        <button class="openbtn" id="openbtn" onclick="openNav()">&#9776; Open Sidebar</button>
-        <br>
-        <button class="signOutBtn" id="signOutBtn" onclick="signOutBtn()">&#10060; Signout</button>
-        <h1>Welcome to Drawbridge!</h1>
+        <div class="headerContainer buttons">
+            <button class="openbtn" id="openbtn" onclick="openNav()">&#9776; Open Sidebar</button>
+            <br>
+            <button class="signOutBtn" id="signOutBtn" onclick="signOutBtn()">&#10060; Signout</button>
+        </div>
+        <div class="headerContainer welcomeText">
+            <h1>Welcome to Drawbridge!</h1>
+        </div>
     </div>
     <div id="mySidebar" class="sidebar">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -78,7 +82,7 @@
 
         <div class="msg-Send">
             <textarea id="mytextarea" readonly></textarea>
-            <hr>
+            <br>
             <input type="text" id="txtSend" />
             <input type="button" id="btnSend" value="Send" onclick="CopyToLabel()" />
         </div>
