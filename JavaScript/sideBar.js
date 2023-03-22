@@ -23,3 +23,7 @@ function openNav() {
     document.getElementById("mytextarea").style.width = "calc(100vw - 175px)";
     document.getElementById("txtSend").style.width = "calc(100vw - 275px)";
   } 
+
+  function signOutBtn() {
+    window.location.replace("login.html");
+  }
