@@ -20,7 +20,7 @@
         <form id="form" action="/register" method="post">
             <input type="text" id="userName" class="input userName" placeholder="username" />
             <br>
-            <input type="password" id="password" class="input Password" placeholder="password" onkeyup='check();' />
+            <input type="password" id="password" class="input Password" placeholder="password" onkeyup='checkPWComplexity();'/>
             <div class="showPW">
                 <strong>Show Password</strong>
                 <input type="checkbox" onclick='togglePW()'>
@@ -28,13 +28,20 @@
             <br>
             <input type="password" id="passwordConfirm" class="input Password confirm" placeholder="confirm password"
                 onkeyup='check();' />
-                <br>
+            <br>
             <span class="checker" id='checker'>Enter your password</span>
             <br>
+            <ul class="stengthChecker">
+                <li id="pwLength">Must have at least eight charecters</li>
+                <li id="pwLowerCase">Must have at least one lowercase letter</li>
+                <li id="pwUpperCase">Must have at least one uppercase letter</li>
+                <li id="pwNumbers">Must have at least one number</li>
+                <li id="pwSpecialChar">Must have at least one special charecter</li>
+            </ul>
             <input class="submitBut" type="submit" value="Submit">
             <br>
         </form>
-        <script src="names.js"></script>
+        <!-- <script src="names.js"></script> -->
         <script src="loginAndRegister.js"></script>
     </div>
 </body>

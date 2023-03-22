@@ -87,3 +87,7 @@ a:link {
     color:#DAD2D8;
     font-family: Roboto Mono;
   }
+  ul {
+    list-style-type: none;
+    color: #AF0C0C;
+  }
