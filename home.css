@@ -43,19 +43,33 @@ p {
 }
 
  .user {
-     height: 75px;
+     height: 65px;
      position: relative;
+     padding:5px;
  }
 
  .user:hover{
     background-color: #524c4c;
 }
 
+.name {
+    margin:0;
+    margin-left:10px;
+}
+
+.status {
+    margin-left:10px;
+}
+
+.top {
+    margin-top:30px;
+}
+
  .about {
      padding: 0;
      float: left;
      margin: 0;
-     margin-left: 55px;
+     padding-left: 55px;
      position: absolute;
      top: 50%;
      -ms-transform: translateY(-50%);
@@ -86,7 +100,7 @@ p {
     top: 0;
     left: 0;
     background-color: #14171d;
-    padding: 10px;
+    
     font-family: Roboto Mono;
     font-size: 10pt;
  }
@@ -116,10 +130,6 @@ p {
      vertical-align: middle;
      border-style: none;
      border-radius: 100%;
- }
-
- li img {
-    margin-right:50px;
  }
 
  /* Styling the msg-header container */
@@ -185,11 +195,7 @@ p {
      font-size: 20px;
  }
 
- .user :hover {
-     background-color: #524c4c;
- }
-
- .users{
+ .users {
     margin-top: 22px;
  }
 
