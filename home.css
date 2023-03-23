@@ -141,7 +141,6 @@ hr {
     top: 0;
     left: 0;
     background-color: #14171d;
-
     font-family: Roboto Mono;
     font-size: 10pt;
 }
@@ -270,10 +269,6 @@ a:active {
     margin-left: 300px;
 }
 
-/* .headerContainer{
-    display: inline-block;
-  } */
-
 .welcomeText {
     text-align: center;
 }
@@ -282,9 +277,3 @@ a:active {
     text-align: left;
     font-family: Roboto Mono;
 }
-
-/* .header {
-    width:auto;
-    
-    text-align: center;
-} */
