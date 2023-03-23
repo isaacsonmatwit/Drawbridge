@@ -219,12 +219,13 @@ p {
   }
 
   .signOutBtn {
+    text-align: right;
     margin-left: 300px;
   }
 
-  .headerContainer{
+  /* .headerContainer{
     display: inline-block;
-  }
+  } */
 
   .welcomeText{
     text-align: center;
