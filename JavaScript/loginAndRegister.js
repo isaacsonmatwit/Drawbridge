@@ -1,5 +1,5 @@
 const express = require('express');
-const sqlite = require('sqlite')
+const sqlite3 = require('sqlite3')
 const bodyParser = require('body-parser');
 const app = express();
 app.use(bodyParser.json());
@@ -34,20 +34,23 @@ function togglePW() {
   }
 }
 
-app.post('/register', async (req, res) => {
-  await db.run(`
-  CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+async function saveCredentials(username, password){
+  const db = await dbPromise;
+  await db.run(`CREATE TABLE IF NOT EXISTS users (
     username TEXT UNIQUE,
     password TEXT
   )`);
-  const username = req.body.username;
-  const password = req.body.password;
+  await db.run(`INSERT INTO users (username, password) VALUES (?, ?)`, [username, password]);
+  console.log(`User ${username} saved to the database`);
+  const users = await db.all(`SELECT * FROM users`);
+  console.log(users);
+}
 
-  await db.run(`
-    INSERT INTO users (username, password) VALUES (?, ?)
-  `, [username, password]);
-});
+function Submit(event){
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+  saveCredentials(username, password);
+}
 
 function checkPWComplexity() {
   let passwordField = document.getElementById('password').value;
