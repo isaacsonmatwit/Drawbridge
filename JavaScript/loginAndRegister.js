@@ -46,11 +46,6 @@ async function saveCredentials(username, password){
   console.log(users);
 }
 
-function Submit(event){
-  const username = document.getElementById('username').value;
-  const password = document.getElementById('password').value;
-  saveCredentials(username, password);
-}
 
 function checkPWComplexity() {
   let passwordField = document.getElementById('password').value;
@@ -96,6 +91,7 @@ function registerSubmitBtn() {
   if (passwordField.match(strongPassword)) {
     if (check()) {
       if(userNameField != 0){
+        saveCredentials(userNameField, passwordField);
         window.location.replace("index.html");
       }
     }
