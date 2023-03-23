@@ -10,6 +10,10 @@ p {
     font-family: Roboto Mono;
 }
 
+.welcomeText {
+    font-family: Roboto Mono;
+}
+
  li {
      list-style: none;
      margin: 0;
