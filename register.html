@@ -23,8 +23,8 @@
             <input type="password" id="password" class="input Password" placeholder="password"
                 onkeyup="checkPWComplexity()" />
             <div class="showPW">
-                <strong>Show Password</strong>
-                <input type="checkbox" onclick='togglePW()'>
+                <label for="showPW-Checkbox"><strong>Show Password</strong></label>
+                <input type="checkbox" id="showPW-Checkbox" onclick='togglePW()'/>
             </div>
             <br>
             <input type="password" id="passwordConfirm" class="input Password confirm" placeholder="confirm password"
