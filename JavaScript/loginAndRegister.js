@@ -34,7 +34,7 @@ function togglePW() {
   }
 }
 
-async function saveCredentials(username, password){
+async function saveCredentials(username, password) {
   const db = await dbPromise;
   await db.run(`CREATE TABLE IF NOT EXISTS users (
     username TEXT UNIQUE,
@@ -90,11 +90,12 @@ function registerSubmitBtn() {
 
   if (passwordField.match(strongPassword)) {
     if (check()) {
-      if(userNameField != 0){
-        saveCredentials(userNameField, passwordField);
-        window.location.replace("index.html");
+      if (userNameField != 0) {
+        // saveCredentials(userNameField, passwordField);
+        // window.location.replace("index.html");
+        return true;
       }
     }
-
+    return false;
   }
 }
