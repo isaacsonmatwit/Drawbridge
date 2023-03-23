@@ -17,8 +17,8 @@
 <body>
     <div class="main">
         <h1>DRAWBRIDGE</h1>
-        <form id="form" action="/register" method="post">
-            <input type="text" id="username" class="input userName" name="username" placeholder="username" />
+        <form id="form" action="/register" method="post" onsubmit="return registerSubmitBtn()">
+            <input type="text" id="username" class="input userName" placeholder="username" />
             <br>
             <input type="password" id="password" class="input Password" name="password" placeholder="password"
                 onkeyup="checkPWComplexity()" />
@@ -39,6 +39,7 @@
                 <li id="pwNumbers">Must have at least one number</li>
                 <li id="pwSpecialChar">Must have at least one special charecter</li>
             </ul>
+            <input class="submitBut" type="submit" value="sumbit">
            <!-- <input class="submitBut" type="button" value="Submit" onclick="Submit(event)"> -->
             <button type="button" onclick="registerSubmitBtn()" value="Submit" class="submitBut">Submit</button>
             <br>

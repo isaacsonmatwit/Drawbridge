@@ -3,6 +3,7 @@ const sqlite3 = require('sqlite3')
 const bodyParser = require('body-parser');
 const app = express();
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 function check() {
   let pwd = document.getElementById('password');
@@ -45,6 +46,7 @@ async function saveCredentials(username, password) {
   const users = await db.all(`SELECT * FROM users`);
   console.log(users);
 }
+
 
 
 function checkPWComplexity() {
@@ -99,3 +101,13 @@ function registerSubmitBtn() {
     return false;
   }
 }
+
+const dbPromise = sqlite.open('./db.sqlite', { Promise });
+let db;
+
+(async () => {
+  db = await dbPromise;
+  app.listen(3000, () => {
+    console.log('Server is running on http://localhost:3000');
+  });
+})();
