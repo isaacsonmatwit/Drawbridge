@@ -165,12 +165,12 @@ h1 {
     text-align: center;
 }
 
-img {
+.msgimg {
     width: 50px;
     vertical-align: middle;
     border-style: none;
     border-radius: 100%;
-}
+ }
 
 /* Styling the msg-header container */
 .msg-header {
@@ -233,9 +233,21 @@ img {
     padding-top: 10px;
     padding-bottom: 10px;
     font-size: 20px;
+    background-color: #0F8B8D;
+    color:white;
+    border:none;
+    border-radius: 5px;
 }
 
-.users {
+#btnSend:hover {
+    background-color: #71a7a9;
+}
+
+#btnSend:active {
+    background-color: #EC9A29;
+}
+
+ .users {
     margin-top: 22px;
 }
 
