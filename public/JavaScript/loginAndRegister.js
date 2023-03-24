@@ -1,9 +1,10 @@
 const express = require('express');
-const sqlite3 = require('sqlite3')
+const sqlite = require('sqlite')
 const bodyParser = require('body-parser');
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static('public'));
 
 function check() {
   let pwd = document.getElementById('password');
@@ -111,3 +112,15 @@ let db;
     console.log('Server is running on http://localhost:3000');
   });
 })();
+
+app.post('/register', async (req, res) => {
+  const { username, password } = req.body;
+ 
+  try {
+    await saveCredentials(username, password);
+    res.status(200).send('User registered successfully');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error registering user');
+  }
+});
