@@ -86,9 +86,11 @@ dialog {
     visibility: hidden;
     transform: translate(17em,-.4em);
 }
+
 dialog span {
     font-style:italic;
 }
+
 .user:hover > dialog {
     visibility: visible;
 }
@@ -123,8 +125,10 @@ textarea {
     height: calc(100vh - 350px);
     resize: none;
     transition: .5s;
-    background-color: #1b1d22;
+    background-color: #41444c;
     color:white;
+    border:none;
+    
 }
 
 hr {
@@ -177,7 +181,6 @@ h1 {
 /* Styling the msg-header container */
 .msg-header {
     color:white;
-    border: 1px solid #ccc;
     width: 97%;
     height: 10%;
     border-bottom: none;
@@ -190,13 +193,17 @@ h1 {
 }
 
 .msg-Send {
-    border: 1px solid #efefef;
     width: 97%;
     background-color: #1b1d22;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     padding: 5px;
     padding-bottom: 10px;
+}
+
+.messaging {
+    display:flex;
+    align-items:center;
 }
 
 
@@ -225,10 +232,11 @@ h1 {
     width: calc(100vw - 545px);
     height: 50px;
     font-size: large;
-    margin-left: 40px;
+    margin-left: 30px;
     transition: .5s;
-    background-color: #1b1d22;
+    background-color: #41444c;
     color:white;
+    border:none;
 }
 
 #btnSend {
@@ -241,6 +249,7 @@ h1 {
     color:white;
     border:none;
     border-radius: 5px;
+    margin-left:20px;
 }
 
 #btnSend:hover {
