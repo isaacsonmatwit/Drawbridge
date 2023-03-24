@@ -104,7 +104,7 @@ function registerSubmitBtn() {
   }
 }
 
-const dbPromise = sqlite.open('/public/JavaScript/db.sqlite', { Promise });
+const dbPromise = sqlite.open('./users.db', { Promise });
 let db;
 
 (async () => {
