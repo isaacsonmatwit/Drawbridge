@@ -302,3 +302,10 @@ a:active {
     text-align: left;
     font-family: Roboto Mono;
 }
+
+dialog {
+    background-color: #14171d;
+    color:white;
+    border:none;
+    border-radius: 5px;
+}
