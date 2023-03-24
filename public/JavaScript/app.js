@@ -45,3 +45,8 @@ app.get('/usr', (req, res) => {
     res.send(rows);
   });
 });
+
+document.getElementById('txtSend').onkeydown = function(e){
+  if(e.keyCode==13) document.getElementById('btnSend').click();
+  document.getElementById('txtSend').value='';
+}
