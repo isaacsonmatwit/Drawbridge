@@ -79,7 +79,7 @@ aside {
 }
 
 .user:hover {
-    background-color: #524c4c;
+    background-color: #3d4451;
 }
 
 dialog {
@@ -123,6 +123,8 @@ textarea {
     height: calc(100vh - 350px);
     resize: none;
     transition: .5s;
+    background-color: #1b1d22;
+    color:white;
 }
 
 hr {
@@ -174,12 +176,13 @@ h1 {
 
 /* Styling the msg-header container */
 .msg-header {
+    color:white;
     border: 1px solid #ccc;
     width: 97%;
     height: 10%;
     border-bottom: none;
     display: inline-block;
-    background-color: #e1e0e0;
+    background-color: #1b1d22;
     margin: 0px;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
@@ -189,7 +192,7 @@ h1 {
 .msg-Send {
     border: 1px solid #efefef;
     width: 97%;
-    background-color: #efefef;
+    background-color: #1b1d22;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     padding: 5px;
@@ -213,7 +216,6 @@ h1 {
 .active {
     width: 150px;
     float: left;
-    color: black;
     font-weight: bold;
     margin: 0 0 0 5px;
     height: 10%;
@@ -225,6 +227,8 @@ h1 {
     font-size: large;
     margin-left: 40px;
     transition: .5s;
+    background-color: #1b1d22;
+    color:white;
 }
 
 #btnSend {
