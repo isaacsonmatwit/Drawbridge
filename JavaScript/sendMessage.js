@@ -3,8 +3,11 @@ function CopyToLabel() {
     var txtName = document.getElementById("txtSend");
 
     //Reference the Label.
-    document.getElementById("mytextarea").innerHTML +=
+    if (txtSend.value != 0){
+      document.getElementById("mytextarea").innerHTML +=
       "&#13;&#10; You: " + txtSend.value;
+    }
+    
 
     //Copy the TextBox value to Label.
   }
