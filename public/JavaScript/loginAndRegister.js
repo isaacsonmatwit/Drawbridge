@@ -1,8 +1,15 @@
-const express = require('express');
-const sqlite = require('sqlite');
-const sqlite3 = require('sqlite3');
-const bodyParser = require('body-parser');
+const express = require ('express');
+const sqlite = require ('sqlite');
+const sqlite3 = require ('sqlite3').verbose();
+const bodyParser = require ('body-parser');
 const app = express();
+// { Promise }
+const dbPromise = sqlite.open({
+  filename: '../users.db',
+  driver: sqlite3.Database
+  // sqlite.OPEN_READWRITE 
+});
+let users;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static('public'));
@@ -104,8 +111,9 @@ function registerSubmitBtn() {
   }
 }
 
-const dbPromise = sqlite.open('./users.db', { Promise });
-let db;
+// const dbPromise = sqlite.open('./users.db', { Promise });
+// let db;
+
 
 (async () => {
   db = await dbPromise;
