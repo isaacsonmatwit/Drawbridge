@@ -1,19 +1,19 @@
 const express = require('express');
-const sqlite3 = require('sqlite3').verbose();
+const sql3 = require('sqlite3').verbose();
 const bodyParser = require('body-parser');
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-const db = new sqlite3.Database('user.db', (err)=> {
+const db = new sql3.Database('../../users.db', (err)=> {
     if (err) {
         return console.error(err.message);
       }
-      console.log('Connected to the user.db SQLite database.');
+      console.log('Connected to the users.db SQLite database.');
 });
 
-db.run('CREATE TABLE IF NOT EXISTS usr (usrname TEXT PRIMARY KEY, usrpass TEXT)', (err)=> {
+db.run('CREATE TABLE IF NOT EXISTS users (username TEXT PRIMARY KEY, password TEXT)', (err)=> {
     if (err) {
         return console.error(err.message);
       } else{
@@ -27,7 +27,7 @@ app.get('/', (req, res) => {
 
 app.post('/addUser', (req, res)=>{
     const {usrname, usrpass}=req.body
-    db.run('INSERT INTO usr (usrname, usrpass) VALUES (?,?)', [usrname, usrpass], (err)=>{
+    db.run('INSERT INTO users (username, password) VALUES (?,?)', [usrname, usrpass], (err)=>{
         if (err) {
             return console.error(err.message);
           } else{
@@ -38,7 +38,7 @@ app.post('/addUser', (req, res)=>{
 });
 
 app.get('/usr', (req, res) => {
-  db.all('SELECT * FROM usr', [], (err, rows) => {
+  db.all('SELECT * FROM users', [], (err, rows) => {
     if (err) {
       return console.error(err.message);
     }
@@ -46,7 +46,3 @@ app.get('/usr', (req, res) => {
   });
 });
 
-document.getElementById('txtSend').onkeydown = function(e){
-  if(e.keyCode==13) document.getElementById('btnSend').click();
-  document.getElementById('txtSend').value='';
-}

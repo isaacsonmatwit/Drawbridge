@@ -3,6 +3,21 @@ const sqlite = require('sqlite');
 const sqlite3 = require('sqlite3');
 const bodyParser = require('body-parser');
 const app = express();
+// { Promise }
+
+
+
+const dbPromise = sqlite.open({
+  filename: '../../users.db',
+  driver: sqlite3.Database
+  // sqlite.OPEN_READWRITE 
+});
+
+app.get('./', function (req, res) {
+  res.render('users.db', {});
+});
+
+let users;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static('public'));
@@ -11,7 +26,7 @@ function check() {
   let pwd = document.getElementById('password');
   let pwdConfirm = document.getElementById('passwordConfirm');
   let checker = document.getElementById('checker');
-  if (pwd.value == "") {
+  if (pwd.value == '') {
   } else if (pwd.value == pwdConfirm.value) {
     checker.style.color = 'green';
     checker.innerHTML = 'matching';
@@ -20,7 +35,7 @@ function check() {
     checker.style.color = 'red';
     checker.innerHTML = 'not matching';
   }
-
+  return false;
 }
 
 function togglePW() {
@@ -38,14 +53,23 @@ function togglePW() {
 }
 
 async function saveCredentials(username, password) {
-  const db = await dbPromise;
-  await db.run(`CREATE TABLE IF NOT EXISTS users (
+  console.log('-> saveCredentials(...)');
+  //console.log('-> const db = await dbPromise');
+  //const db = await dbPromise;
+  //console.log('const db = await dbPromise ->');
+  console.log('-> await db.run(...)');
+  await dbPromise.run(`CREATE TABLE IF NOT EXISTS users (
     username TEXT UNIQUE,
     password TEXT
   )`);
-  await db.run(`INSERT INTO users (username, password) VALUES (?, ?)`, [username, password]);
+  console.log('await db.run(`CREATE...) ->');
+  console.log('-> await db.run(Insert...)');
+  await dbPromise.run(`INSERT INTO users (username, password) VALUES (?, ?)`, [username, password]);
+  console.log('await db.run(INSERT...) ->');
   console.log(`User ${username} saved to the database`);
+  console.log('-> const users = await db.all(`SELECT * FROM users`);');
   const users = await db.all(`SELECT * FROM users`);
+  console.log('const users = await db.all(`SELECT * FROM users`); ->');
   console.log(users);
 }
 
@@ -92,16 +116,18 @@ function registerSubmitBtn() {
   let userNameField = document.getElementById('username').value;
   let strongPassword = new RegExp('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})');
 
-  if (passwordField.match(strongPassword)) {
+  //if (passwordField.match(strongPassword)) {
     if (check()) {
+      console.log('password check passed!');
       if (userNameField != 0) {
-        // saveCredentials(userNameField, passwordField);
-        // window.location.replace("index.html");
+        console.log('attempting to save credentials..');
+        saveCredentials(userNameField, passwordField);
+        //window.location.replace('index.html');
         return true;
       }
     }
     return false;
-  }
+  //}
 }
 
 const dbPromise = sqlite.open('./users.db', { Promise });
