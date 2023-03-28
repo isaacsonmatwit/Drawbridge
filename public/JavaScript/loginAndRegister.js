@@ -4,11 +4,19 @@ const sqlite3 = require ('sqlite3').verbose();
 const bodyParser = require ('body-parser');
 const app = express();
 // { Promise }
+
+
+
 const dbPromise = sqlite.open({
-  filename: '../users.db',
+  filename: './users.db',
   driver: sqlite3.Database
   // sqlite.OPEN_READWRITE 
 });
+
+app.get('./', function (req, res) {
+  res.render('users.db', {});
+});
+
 let users;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -102,7 +110,7 @@ function registerSubmitBtn() {
   if (passwordField.match(strongPassword)) {
     if (check()) {
       if (userNameField != 0) {
-        // saveCredentials(userNameField, passwordField);
+        saveCredentials(userNameField, passwordField);
         // window.location.replace("index.html");
         return true;
       }
