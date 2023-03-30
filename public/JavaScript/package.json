@@ -2,6 +2,7 @@
   "name": "javascript",
   "version": "1.0.0",
   "main": "app.js",
+  
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,7 +14,11 @@
     "express": "^4.18.2",
     "promise": "^8.3.0",
     "sqlite": "^4.1.2",
-    "sqlite3": "^5.1.6"
+    "sqlite3": "^5.1.6",
+    "node-addon-api": "^4.3.0",
+    "node-gyp": "^8.4.1",
+    "nopt": "^5.0.0",
+    "npmlog": "^5.0.1"
   },
   "description": ""
 }
