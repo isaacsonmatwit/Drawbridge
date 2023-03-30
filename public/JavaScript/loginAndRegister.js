@@ -8,7 +8,7 @@ const app = express();
 
 
 const dbPromise = sqlite.open({
-  filename: '/Drawbridge/users.db',
+  filename: '../../users.db',
   driver: sqlite3.Database
   // sqlite.OPEN_READWRITE 
 });
