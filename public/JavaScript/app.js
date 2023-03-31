@@ -6,6 +6,7 @@ const app = express();
 const sql3 = sqlite3.verbose();
 
 const cwd = process.cwd();//Current Working Directory
+var CryptoJS = require("crypto-js");
 
 app.use(express.static(cwd));//Use the Current Working Directory
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -55,9 +56,11 @@ app.listen(5500, () => {
 });
 
 async function saveCredentials(username, password) {
+  var sha512 = CryptoJS.SHA512(password);
+  var hashString = sha512.toString()
   console.log('-> saveCredentials(...)');
   console.log('-> await db.run(Insert...)');
-  db.run(`INSERT INTO users (username, password) VALUES (?, ?)`, [username, password]);
+  db.run(`INSERT INTO users (username, password) VALUES (?, ?)`, [username, hashString]);
   console.log(`User ${username} saved to the database`);
   console.log('-> const users = await db.all(`SELECT * FROM users`);');
   const users = await db.all(`SELECT * FROM users`);
