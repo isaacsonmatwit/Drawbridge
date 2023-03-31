@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 
 var checkPassed = false;
 
-const db = new sql3.Database('../../users.db', (err)=> {
+const db = new sql3.Database('../users.db', (err)=> {
     if (err) {
         return console.error(err.message);
       }
