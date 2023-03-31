@@ -1,18 +1,8 @@
-//import expressPkg from 'express';
-//import sqlite from 'sqlite';
-//import sqlite3 from 'sqlite3';
-//import body_parser from 'body-parser';
 const express = require('../JavaScript/node_modules/express');
 const sqlite = require('../JavaScript/node_modules/sqlite');
 const sqlite3 = require('../JavaScript/node_modules/sqlite3');
 const bodyParser = require('../JavaScript/node_modules/body-parser');
-//const app = expressPkg();
-//const { json, urlencoded } = body_parser;
-//const { statc } = expressPkg;
-
 const app = express();
-// { Promise }
-
 
 
 const dbPromise = sqlite.open({
@@ -21,7 +11,6 @@ const dbPromise = sqlite.open({
   mode: sqlite.OPEN_READWRITE
 });
 
-//const dbPromise = sqlite.open('/Drawbridge/users.db', { Promise });
 let db;
 let users;
 
@@ -37,9 +26,7 @@ app.get('./', function (req, res) {
 
 async function saveCredentials(username, password) {
   console.log('-> saveCredentials(...)');
-  //console.log('-> const db = await dbPromise');
   db = await dbPromise;
-  //console.log('const db = await dbPromise ->');
   console.log('-> await db.run(...)');
   await dbPromise.run(`CREATE TABLE IF NOT EXISTS users (
     username TEXT UNIQUE,
@@ -64,7 +51,6 @@ function registerSubmitBtn() {
       if (userNameField != 0) {
         console.log('attempting to save credentials..');
         saveCredentials(userNameField, passwordField);
-        //window.location.replace('index.html');
         return true;
       }
     }
