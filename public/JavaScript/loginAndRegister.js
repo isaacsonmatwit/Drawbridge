@@ -73,7 +73,7 @@ function registerSubmitBtn() {
   });
 })();
 
-//Makes sure there are no errors while registering
+//Checks for errors while registering
 app.post('/register', async (req, res) => {
   const { username, password } = req.body;
 
