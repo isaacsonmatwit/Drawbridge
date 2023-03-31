@@ -307,3 +307,10 @@ dialog {
     border:none;
     border-radius: 5px;
 }
+
+button {
+    background-color: #0F8B8D;
+    border:none;
+    color:white;
+    border-radius:5px;
+}
