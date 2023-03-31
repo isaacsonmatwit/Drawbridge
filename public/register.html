@@ -7,22 +7,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DrawBridge Registration</title>
     <link rel="stylesheet" href="loginAndRegister.css" />
-    <script type="text/JavaScript" src="JavaScript/loginAndRegister.js"></script>
     <script type="text/JavaScript" src="JavaScript/app.js"></script>
+    <!-- <script type="text/JavaScript" src="JavaScript/loginAndRegister.js"></script> -->
+    <script type="text/JavaScript" src="JavaScript/passwordFunction.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
-
 </head>
 
 <body>
     <div class="main">
         <h1>DRAWBRIDGE</h1>
         <!-- action="/register" -->
-        <form id="form" method="post" action="#" onsubmit="return registerSubmitBtn()" enctype="application/x-www-form-urlencoded">
-            <input type="text" id="username" class="input userName" placeholder="username" />
+        <form id="form" method="POST" action="/addUser" onsubmit="return check();" enctype="application/x-www-form-urlencoded">
+            <input type="text" name="username" id="username" class="input userName" placeholder="username" />
             <br>
-            <input type="password" id="password" class="input Password" name="password" placeholder="password"
+            <input type="password" name="password" id="password" class="input Password"  placeholder="password"
                 onkeyup="checkPWComplexity()" />
             <div class="showPW">
                 <label for="showPW-Checkbox"><strong>Show Password</strong></label>
@@ -41,7 +41,7 @@
                 <li id="pwNumbers">Must have at least one number</li>
                 <li id="pwSpecialChar">Must have at least one special charecter</li>
             </ul>
-            <button type="submit" value="Submit" class="submitBut">Submit</button>
+            <button type="submit" value="Submit" class="submitBut" id="submit">Submit</button>
             <br>
         </form>
         <!-- <script src="JavaScript/names.js"></script> -->
