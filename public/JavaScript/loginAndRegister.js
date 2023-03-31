@@ -1,3 +1,5 @@
+//MOVED TO app.js//
+
 //import expressPkg from 'express';
 //import sqlite from 'sqlite';
 //import sqlite3 from 'sqlite3';

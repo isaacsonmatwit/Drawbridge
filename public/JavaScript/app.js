@@ -21,6 +21,87 @@ const db = new sql3.Database('../users.db', (err)=> {
       console.log('Connected to the users.db SQLite database.');
 });
 
+async function saveCredentials(username, password) {
+  var sha512 = CryptoJS.SHA512(password);
+  var hashString = sha512.toString()
+  console.log('-> saveCredentials(...)');
+  console.log('-> await db.run(Insert...)');
+  db.run(`INSERT INTO users (username, password) VALUES (?, ?)`, [username, hashString]);
+  console.log(`User ${username} saved to the database`);
+  console.log('-> const users = await db.all(`SELECT * FROM users`);');
+  const users = await db.all(`SELECT * FROM users`);
+  console.log(users);
+}
+
+function checkCredentials(username,password) {
+  let strongPassword = '(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})';
+  let pwd = "" + password;
+  if (pwd.match(strongPassword)) {
+    console.log('Password check passed!');
+    if (username != 0) {
+      console.log('attempting to save credentials..');
+      saveCredentials(username, password);
+      //window.location.replace('index.html');
+      return true;
+    }
+  }
+  console.log('Password check failed: '+pwd.match(strongPassword)+' | '+checkPassed+' : usr='+username+', pwd='+password);
+  return false;
+}
+
+const check = function() {
+  let pwd = document.getElementById('password').value;
+  let pwdConfirm = document.getElementById('passwordConfirm').value;
+  let checker = document.getElementById('checker');
+
+  if (pwd == pwdConfirm && pwd != "") {
+    checker.style.color = 'green';
+    checker.innerHTML = 'matching';
+    //submitBtn.disabled = false;
+    checkPassed = true;
+      return true;
+  } else {
+    checker.style.color = 'red';
+    checker.innerHTML = 'not matching';
+    checkPassed = false;
+  }
+  return false;
+}
+
+const checkPWComplexity = function() {
+  let passwordField = document.getElementById('password').value;
+
+  if (passwordField.length >= 8) {
+    document.getElementById('pwLength').style.color = 'green';
+  } else {
+    document.getElementById('pwLength').style.color = '#AF0C0C';
+  }
+
+  if (passwordField.match(/[a-z]/)) {
+    document.getElementById('pwLowerCase').style.color = 'green';
+  } else {
+    document.getElementById('pwLowerCase').style.color = '#AF0C0C';
+  }
+
+  if (passwordField.match(/[A-Z]/)) {
+    document.getElementById('pwUpperCase').style.color = 'green';
+  } else {
+    document.getElementById('pwUpperCase').style.color = '#AF0C0C';
+  }
+
+  if (passwordField.match(/\d/)) {
+    document.getElementById('pwNumbers').style.color = 'green';
+  } else {
+    document.getElementById('pwNumbers').style.color = '#AF0C0C';
+  }
+
+  if (passwordField.match(/[^a-zA-Z\d]/)) {
+    document.getElementById('pwSpecialChar').style.color = 'green';
+  } else {
+    document.getElementById('pwSpecialChar').style.color = '#AF0C0C';
+  }
+}
+
 db.run('CREATE TABLE IF NOT EXISTS users (username TEXT PRIMARY KEY, password TEXT)', (err)=> {
   if (err) {
       return console.error(err.message);
@@ -54,84 +135,3 @@ app.get('/user', (req, res) => {
 app.listen(5500, () => {
   console.log('Server is running on http://localhost:5500');
 });
-
-async function saveCredentials(username, password) {
-  var sha512 = CryptoJS.SHA512(password);
-  var hashString = sha512.toString()
-  console.log('-> saveCredentials(...)');
-  console.log('-> await db.run(Insert...)');
-  db.run(`INSERT INTO users (username, password) VALUES (?, ?)`, [username, hashString]);
-  console.log(`User ${username} saved to the database`);
-  console.log('-> const users = await db.all(`SELECT * FROM users`);');
-  const users = await db.all(`SELECT * FROM users`);
-  console.log(users);
-}
-
-function checkCredentials(username,password) {
-  let strongPassword = '(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})';
-  let pwd = "" + password;
-  if (pwd.match(strongPassword)) {
-    console.log('Password check passed!');
-    if (username != 0) {
-      console.log('attempting to save credentials..');
-      saveCredentials(username, password);
-      //window.location.replace('index.html');
-      return true;
-    }
-  }
-  console.log('Password check failed: '+pwd.match(strongPassword)+' | '+checkPassed+' : usr='+username+', pwd='+password);
-  return false;
-}
-
-function check() {
-  let pwd = document.getElementById('password').value;
-  let pwdConfirm = document.getElementById('passwordConfirm').value;
-  let checker = document.getElementById('checker');
-
-  if (pwd == pwdConfirm && pwd != "") {
-    checker.style.color = 'green';
-    checker.innerHTML = 'matching';
-    //submitBtn.disabled = false;
-    checkPassed = true;
-      return true;
-  } else {
-    checker.style.color = 'red';
-    checker.innerHTML = 'not matching';
-    checkPassed = false;
-  }
-  return false;
-}
-
-function checkPWComplexity() {
-  let passwordField = document.getElementById('password').value;
-
-  if (passwordField.length >= 8) {
-    document.getElementById('pwLength').style.color = 'green';
-  } else {
-    document.getElementById('pwLength').style.color = '#AF0C0C';
-  }
-
-  if (passwordField.match(/[a-z]/)) {
-    document.getElementById('pwLowerCase').style.color = 'green';
-  } else {
-    document.getElementById('pwLowerCase').style.color = '#AF0C0C';
-  }
-
-  if (passwordField.match(/[A-Z]/)) {
-    document.getElementById('pwUpperCase').style.color = 'green';
-  } else {
-    document.getElementById('pwUpperCase').style.color = '#AF0C0C';
-  }
-
-  if (passwordField.match(/\d/)) {
-    document.getElementById('pwNumbers').style.color = 'green';
-  } else {
-    document.getElementById('pwNumbers').style.color = '#AF0C0C';
-  }
-
-  if (passwordField.match(/[^a-zA-Z\d]/)) {
-    document.getElementById('pwSpecialChar').style.color = 'green';
-  } else {
-    document.getElementById('pwSpecialChar').style.color = '#AF0C0C';
-  }
-}
