@@ -67,7 +67,7 @@ async function saveCredentials(username, password) {
 function checkCredentials(username,password) {
   let strongPassword = '(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})';
   let pwd = "" + password;
-  //if (pwd.match(strongPassword) && checkPassed) {
+  if (pwd.match(strongPassword)) {
     console.log('Password check passed!');
     if (username != 0) {
       console.log('attempting to save credentials..');
@@ -75,7 +75,7 @@ function checkCredentials(username,password) {
       //window.location.replace('index.html');
       return true;
     }
-  //}
+  }
   console.log('Password check failed: '+pwd.match(strongPassword)+' | '+checkPassed+' : usr='+username+', pwd='+password);
   return false;
 }
@@ -90,7 +90,7 @@ function check() {
     checker.innerHTML = 'matching';
     //submitBtn.disabled = false;
     checkPassed = true;
-    return true;
+      return true;
   } else {
     checker.style.color = 'red';
     checker.innerHTML = 'not matching';
