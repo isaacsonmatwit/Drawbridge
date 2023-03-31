@@ -81,6 +81,7 @@ function registerSubmitBtn() {
   });
 })();
 
+//Checks for errors while registering
 app.post('/register', async (req, res) => {
   const { username, password } = req.body;
 
@@ -92,4 +93,3 @@ app.post('/register', async (req, res) => {
     res.status(500).send('Error registering user');
   }
 });
-

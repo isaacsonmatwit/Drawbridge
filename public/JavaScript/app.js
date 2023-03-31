@@ -6,6 +6,7 @@ const app = express();
 const sql3 = sqlite3.verbose();
 
 const cwd = process.cwd();//Current Working Directory
+var CryptoJS = require("crypto-js");
 
 app.use(express.static(cwd));//Use the Current Working Directory
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -55,9 +56,11 @@ app.listen(5500, () => {
 });
 
 async function saveCredentials(username, password) {
+  var sha512 = CryptoJS.SHA512(password);
+  var hashString = sha512.toString()
   console.log('-> saveCredentials(...)');
   console.log('-> await db.run(Insert...)');
-  db.run(`INSERT INTO users (username, password) VALUES (?, ?)`, [username, password]);
+  db.run(`INSERT INTO users (username, password) VALUES (?, ?)`, [username, hashString]);
   console.log(`User ${username} saved to the database`);
   console.log('-> const users = await db.all(`SELECT * FROM users`);');
   const users = await db.all(`SELECT * FROM users`);
@@ -67,7 +70,7 @@ async function saveCredentials(username, password) {
 function checkCredentials(username,password) {
   let strongPassword = '(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})';
   let pwd = "" + password;
-  //if (pwd.match(strongPassword) && checkPassed) {
+  if (pwd.match(strongPassword)) {
     console.log('Password check passed!');
     if (username != 0) {
       console.log('attempting to save credentials..');
@@ -75,7 +78,7 @@ function checkCredentials(username,password) {
       //window.location.replace('index.html');
       return true;
     }
-  //}
+  }
   console.log('Password check failed: '+pwd.match(strongPassword)+' | '+checkPassed+' : usr='+username+', pwd='+password);
   return false;
 }
@@ -90,7 +93,7 @@ function check() {
     checker.innerHTML = 'matching';
     //submitBtn.disabled = false;
     checkPassed = true;
-    return true;
+      return true;
   } else {
     checker.style.color = 'red';
     checker.innerHTML = 'not matching';
