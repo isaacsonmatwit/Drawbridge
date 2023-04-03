@@ -34,7 +34,7 @@ function getCookieValue(cName){
 function setCookie(cName, cValue, expireDate) {
   if(expireDate==null)
     expireDate = weeksToDate(1);
-  document.cookie = cName + "=" + cValue + ";" + expireDate;
+  document.cookie = cName + '=' + cValue + ';' + 'expires=' + expireDate + ';';
   return true;
 }
 
@@ -69,10 +69,8 @@ function cookieExists(cName) {
 // Adds a new cookie with name (cName) and value (cValue), and expiration date (expireDate);
 // Note: function {daysToDate} can be used to convert any number of days to a date; daysToDate = current date + # of days;
 function addCookie(cName, cValue, expireDate) {
-  if(!cookieExists(cName)){
-    document.cookie = cName + '=' + cValue + 'expires=' + expireDate;
-    return true;
-  }
+  if(!cookieExists(cName))
+    return setCookie(cName,cValue,expireDate);
   return false;
 }
 
