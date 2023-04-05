@@ -129,3 +129,37 @@ function checkPWComplexity() {
     document.getElementById('pwSpecialChar').style.color = '#AF0C0C';
 
 }
+
+
+//login stuff
+
+app.post('/auth', function (request, response) {
+  let username = request.body.username;
+  let password = request.body.password;
+  var hashString = CryptoJS.SHA512(password).toString()
+
+  if (username && password) {
+    db.get(`SELECT * FROM users WHERE username = ? AND password = ?`, [username, hashString], (err, row) => {
+      if (err) {
+        console.error(err);
+      } else {
+        if (row) {
+          console.log('Login sucessful');
+          console.log('username input: ' + username + ' password input: ' + password + ' hash of password: ' + hashString);
+          console.log(row);
+          response.redirect('/index.html');
+        } else {
+          console.log('username input: ' + username + ' password input: ' + password + ' hash of password: ' + hashString);
+          console.log(row);
+          console.log('Invalid username or password');
+          
+          response.redirect('/login.html');
+          response.end();
+        }
+      }
+    });
+  } else {
+    response.send('Please enter a username and password!');
+    response.end();
+  }
+});
