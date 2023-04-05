@@ -5,8 +5,12 @@ const bodyParser = require('../JavaScript/node_modules/body-parser');
 const app = express();
 const sql3 = sqlite3.verbose();
 
+const CryptoJS = require('crypto-js'); // Password encryption thingy
+
+const cookie = import('./cookie-module/deliciousCookie.js'); // Cookies!
+
+
 const cwd = process.cwd(); // Current Working Directory
-var CryptoJS = require("crypto-js"); // Password encryption thingy
 
 app.use(express.static(cwd));//Use the Current Working Directory
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -136,7 +140,7 @@ function checkPWComplexity() {
 app.post('/auth', function (request, response) {
   let username = request.body.username;
   let password = request.body.password;
-  var hashString = CryptoJS.SHA512(password).toString()
+  var hashString = CryptoJS.SHA512(password).toString();
 
   if (username && password) {
     db.get(`SELECT * FROM users WHERE username = ? AND password = ?`, [username, hashString], (err, row) => {
