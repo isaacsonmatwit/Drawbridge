@@ -5,16 +5,16 @@ const bodyParser = require('../JavaScript/node_modules/body-parser');
 const app = express();
 const sql3 = sqlite3.verbose();
 
-const CryptoJS = require('crypto-js'); // Password encryption thingy
-
-const cookie = import('./cookie-module/deliciousCookie.js'); // Cookies!
-
+const CryptoJS = require("crypto-js"); // Password encryption thingy
+const cookieParser = require('cookie-parser');
 
 const cwd = process.cwd(); // Current Working Directory
+const PastDate = 'Thu, 01 Jan 1970 00:00:00 UTC';
 
 app.use(express.static(cwd));//Use the Current Working Directory
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 //Create the db instance
 const db = new sql3.Database('../users.db', (err)=> {
@@ -34,16 +34,27 @@ db.run('CREATE TABLE IF NOT EXISTS users (username TEXT PRIMARY KEY, password TE
 });
 
 app.get('/', (req, res) => {
-  res.redirect('/register.html');
+  console.log(req.cookies);
+  let lastLogin = req.cookies.user.LastLogin;
+  let lastLogout = req.cookies.user.LastLogout;
+  if(lastLogin <= lastLogout)
+    res.send('/Login.html');
+  else
+    res.send('/index.html');
 });
 
 //Registration form action
 app.post('/addUser', (req, res)=>{
   const {username, password}=req.body;
-  console.log(req.body);
-  if(checkCredentials(username,password))
+  console.log(req);
+  if(checkCredentials(username,password)){
+    res.cookie("user",{
+      Username: username,
+      LastLogin: new Date().getTime(),
+      LastLogout: 0
+    });
     res.redirect('/index.html');
-  else
+  } else
     res.redirect('/register.html');
 });
 
@@ -56,19 +67,24 @@ app.get('/user', (req, res) => {
   });
 });
 
+app.get('/logout', (req, res) => {
+  console.log(req.cookies);
+  res.cookie("user",{
+    Username: req.cookies.user.Username,
+    LastLogin: req.cookies.user.LastLogin,
+    LastLogout: new Date().getTime()
+  });
+  res.redirect('/Login.html');
+});
+
 //Listen for GETs & POSTs & whatnot
 app.listen(5500, () => {
   console.log('Server is running on http://localhost:5500');
 });
 
 async function saveCredentials(username, password) {
-  //var sha512 = CryptoJS.SHA512(password); //Variable sha512 isn't used anywhere else;
-  var hashString = CryptoJS.SHA512(password).toString()
-  //console.log('-> saveCredentials(...)');
-  //console.log('-> await db.run(Insert...)');
+  var hashString = CryptoJS.SHA512(password).toString();
   db.run(`INSERT INTO users (username, password) VALUES (?, ?)`, [username, hashString]);
-  //console.log(`User ${username} saved to the database`);
-  //console.log('-> const users = await db.all(`SELECT * FROM users`);');
   const users = db.all(`SELECT * FROM users`);
   console.log(users);
 }
@@ -140,8 +156,8 @@ function checkPWComplexity() {
 app.post('/auth', function (request, response) {
   let username = request.body.username;
   let password = request.body.password;
-  var hashString = CryptoJS.SHA512(password).toString();
-
+  var hashString = CryptoJS.SHA512(password).toString()
+  console.log(request);
   if (username && password) {
     db.get(`SELECT * FROM users WHERE username = ? AND password = ?`, [username, hashString], (err, row) => {
       if (err) {
@@ -150,7 +166,12 @@ app.post('/auth', function (request, response) {
         if (row) {
           console.log('Login sucessful');
           console.log('username input: ' + username + ' password input: ' + password + ' hash of password: ' + hashString);
-          console.log(row);
+          //console.log(row);
+          response.cookie("user",{
+            Username: username,
+            LastLogin: new Date().getTime(),
+            LastLogout: request.cookies.user.LastLogout
+          });
           response.redirect('/index.html');
         } else {
           console.log('username input: ' + username + ' password input: ' + password + ' hash of password: ' + hashString);
@@ -167,3 +188,31 @@ app.post('/auth', function (request, response) {
     response.end();
   }
 });
+
+// Converts a number of weeks to a date;
+// @Returns this date + (weeks); can be used for expire date;
+function weeksToDate(weeks) {
+  const d = new Date();
+  d.setTime(d.getTime() + (weeks*7*24*60*60*1000));
+  return d.toUTCString();
+}
+
+// Converts a number of days to a date;
+// @Returns this date + (days); can be used for expire date;
+function daysToDate(days) {
+  const d = new Date();
+  d.setTime(d.getTime() + (days*24*60*60*1000));
+  return d.toUTCString();
+}
+
+// Converts a number of hours to a date;
+// @Returns this date + (hours); can be used for expire date;
+function hoursToDate(hours) {
+  const d = new Date();
+  d.setTime(d.getTime() + (hours*60*60*1000));
+  return d.toUTCString();
+}
+
+function getCurrentDate(){
+  return new Date().toUTCString();
+}
