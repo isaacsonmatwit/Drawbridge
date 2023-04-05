@@ -4,12 +4,21 @@ const PastDate = 'Thu, 01 Jan 1970 00:00:00 UTC';
 
 //var isLoggedIn = false;
 
-const getCookiesAsList = () => {
-  return document.cookie.split(';');
+var cookieExpirationDates = [];
+
+// Adds a new cookie with name (cName) and value (cValue), and expiration date (expireDate);
+// Note: function {daysToDate} can be used to convert any number of days to a date; daysToDate = current date + # of days;
+function addCookie(cName, cValue, expireDate) {
+  if(!cookieExists(cName))
+    return setCookie(cName,cValue,expireDate);
+  return false;
 }
 
-const getThisDate = () => {
-  return new Date().toUTCString();
+// Removes a cookie by setting it's expiration date to the earliest computer date (PastDate)
+function removeCookie(cName) {
+  if(cookieExists(cName))
+    return setCookie(cName, '', PastDate);
+  return false;
 }
 
 // @Returns the cookie with name (cName); 
@@ -21,6 +30,10 @@ function getCookie(cName){
       if(cookieList[ci].indexOf(cName)==0)
           return cookieList[ci];
   return null;
+}
+
+const getCookiesAsList = () => {
+  return document.cookie.split(';');
 }
 
 // @Returns value of cookie with name (cName); 
@@ -66,24 +79,14 @@ function cookieExists(cName) {
   return getCookie(cName)!=null;
 }
 
-// Adds a new cookie with name (cName) and value (cValue), and expiration date (expireDate);
-// Note: function {daysToDate} can be used to convert any number of days to a date; daysToDate = current date + # of days;
-function addCookie(cName, cValue, expireDate) {
-  if(!cookieExists(cName))
-    return setCookie(cName,cValue,expireDate);
-  return false;
-}
-
-// Removes a cookie by setting it's expiration date to the earliest computer date (PastDate)
-function removeCookie(cName) {
-  if(cookieExists(cName))
-    return setCookie(cName, '', PastDate);
-  return false;
-}
-
 /*------------------------*\
 |--Other Helper Functions--|
 \*------------------------*/
+
+// @Returns current date as string;
+const getCurrentDate = () => {
+  return new Date().toUTCString();
+}
 
 // Converts a number of weeks to a date;
 // @Returns this date + (weeks); can be used for expire date;
@@ -109,3 +112,18 @@ function hoursToDate(hours) {
   return d.toUTCString();
 }
 
+export {
+  addCookie,
+  removeCookie,
+  getCookie,
+  getCookiesAsList,
+  getCookieValue,
+  setCookieValue,
+  setCookieExpiration,
+  checkCookie,
+  cookieExists,
+  getCurrentDate,
+  weeksToDate,
+  daysToDate,
+  hoursToDate
+};

@@ -18,5 +18,6 @@
     "sqlite3": "^5.1.6"
   },
   "type": "commonjs",
+  "devDependencies": {},
   "description": ""
 }
