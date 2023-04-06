@@ -16,7 +16,7 @@
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
 </head>
 
-<body>
+<body onload="changeName()">
     <div id="header" class="header">
         <!-- used this for sidebar open and close https://www.w3schools.com/howto/howto_js_collapse_sidebar.asp -->
         <div class="headerContainer buttons">
@@ -26,7 +26,9 @@
               <button class="signOutBtn" id="signOutBtn" onclick="signOutBtn()">Signout</button>
             </form>
         </div>
+        
         <div class="headerContainer welcomeText">
+            <h2>Hello, <span id="usersname"></span>!</h2>
             <h1>Welcome to Drawbridge!</h1>
         </div>
     </div>
@@ -46,7 +48,7 @@
                     </dialog>
                 </li>
                 <li class="user">
-                    <img src="../images/dutch.png" alt="avatar" />
+                    <img src="images/dutch.png" alt="avatar" />
                     <div class="about">
                         <div class="name">Dutch Van Der Linde</div>
                         <br>
@@ -57,7 +59,7 @@
                     </dialog>
                 </li>
                 <li class="user">
-                    <img src="../images/john.png" alt="avatar" />
+                    <img src="images/john.png" alt="avatar" />
                     <div class="about">
                         <div class="name">John Marston</div>
                         <br>
@@ -68,7 +70,7 @@
                     </dialog>
                 </li>
                 <li class="user">
-                    <img src="../images/micah.png" alt="avatar" />
+                    <img src="images/micah.png" alt="avatar" />
                     <div class="about">
                         <div class="name">Micah Bell</div>
                         <br>
@@ -79,7 +81,7 @@
                     </dialog>
                 </li>
                 <li class="user">
-                    <img src="../images/javier.png" alt="avatar" />
+                    <img src="images/javier.png" alt="avatar" />
                     <div class="about">
                         <div class="name">Javier Escuella</div>
                         <br>
@@ -96,7 +98,7 @@
     <div id="main" class="msg-main">
         <div class="msg-header">
             <div class="container1">
-                <img src="../images/micah.png" class="msgimg">
+                <img src="images/micah.png" class="msgimg">
                 <div class="active ">
                     <p>Micah Bell</p>
                 </div>
@@ -108,11 +110,9 @@
             <br>
             <div class="messaging">
             <input type="text" id="txtSend" />
-            <button type="submit" id="btnSend" value="Send" onclick="CopyToLabel()"><img src="../images/sendlogo.png" height="31" width="auto"></button>
+            <button type="submit" id="btnSend" value="Send" onclick="CopyToLabel()"><img src="images/sendlogo.png" height="31" width="auto"></button>
             </div>
         </div>
     </div>
-
 </body>
-
 </html>
