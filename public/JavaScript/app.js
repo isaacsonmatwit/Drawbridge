@@ -220,3 +220,11 @@ function hoursToDate(hours) {
 function getCurrentDate(){
   return new Date().toUTCString();
 }
+
+function changeName() {
+  
+  console.log("user logged in!");
+  db.get(`SELECT * FROM users`, [username], (funny) => {
+    document.getElementById("usersname").innerHTML = funny;
+  });
+}
