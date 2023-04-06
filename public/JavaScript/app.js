@@ -1,7 +1,7 @@
-const express = require('../JavaScript/node_modules/express');
-const sqlite = require('../JavaScript/node_modules/sqlite');
-const sqlite3 = require('../JavaScript/node_modules/sqlite3');
-const bodyParser = require('../JavaScript/node_modules/body-parser');
+const express = require('express');
+const sqlite = require('sqlite');
+const sqlite3 = require('sqlite3');
+const bodyParser = require('body-parser');
 const app = express();
 const sql3 = sqlite3.verbose();
 
@@ -9,7 +9,6 @@ const CryptoJS = require("crypto-js"); // Password encryption thingy
 const cookieParser = require('cookie-parser');
 
 const cwd = process.cwd(); // Current Working Directory
-const PastDate = 'Thu, 01 Jan 1970 00:00:00 UTC';
 
 app.use(express.static(cwd));//Use the Current Working Directory
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -34,11 +33,11 @@ db.run('CREATE TABLE IF NOT EXISTS users (username TEXT PRIMARY KEY, password TE
 });
 
 app.get('/', (req, res) => {
-  console.log(req.cookies);
+  console.log('/ request ckys: '+req.cookies.user.LastLogin+'; '+req.cookies.user.LastLogout);
   let lastLogin = req.cookies.user.LastLogin;
   let lastLogout = req.cookies.user.LastLogout;
   if(lastLogin <= lastLogout)
-    res.send('/Login.html');
+    res.send('/login.html');
   else
     res.send('/index.html');
 });
@@ -46,7 +45,7 @@ app.get('/', (req, res) => {
 //Registration form action
 app.post('/addUser', (req, res)=>{
   const {username, password}=req.body;
-  console.log(req);
+  console.log('/addUser request ckys: '+req.cookies.user.LastLogin+'; '+req.cookies.user.LastLogout);
   if(checkCredentials(username,password)){
     res.cookie("user",{
       Username: username,
@@ -63,25 +62,67 @@ app.get('/user', (req, res) => {
     if (err) {
       return console.error(err.message);
     }
+    if(res.cookie.user)
+      res.cookie("user",req.cookies.user);
     res.send(rows);
   });
 });
 
-app.get('/logout', (req, res) => {
-  console.log(req.cookies);
-  res.cookie("user",{
-    Username: req.cookies.user.Username,
-    LastLogin: req.cookies.user.LastLogin,
-    LastLogout: new Date().getTime()
-  });
-  res.redirect('/Login.html');
+app.post('/logout', (req, res) => {
+  if(req.cookies.user){ // If 'user' cookie exists in req.cookies, then log it & set res.cookie;
+    console.log('/logout request ckys: ',req.cookies);
+    res.cookie("user",{
+      Username: req.cookies.user.Username,
+      LastLogin: req.cookies.user.LastLogin,
+      LastLogout: new Date().getTime()
+    });
+  }
+  res.redirect('/login.html');
 });
 
-//Listen for GETs & POSTs & whatnot
+//Listen for GETs & POSTs & stuff
 app.listen(5500, () => {
   console.log('Server is running on http://localhost:5500');
 });
 
+//--Login stuff--//
+
+app.post('/auth', function (request, response) {
+  let username = request.body.username;
+  let password = request.body.password;
+  var hashString = CryptoJS.SHA512(password).toString();
+  if (username && password) {
+    db.get(`SELECT * FROM users WHERE username = ? AND password = ?`, [username, hashString], (err, row) => {
+      if (err) {
+        console.error(err);
+      } else {
+        if (row) {
+          console.log('Login sucessful');
+          console.log('username input: ' + username + ' password input: ' + password + ' hash of password: ' + hashString);
+          //console.log(row);
+          response.cookie("user",{
+            Username: username,
+            LastLogin: new Date().getTime(),
+            LastLogout: request.cookies.user.LastLogout
+          });
+          response.redirect('/index.html');
+        } else {
+          console.log('username input: ' + username + ' password input: ' + password + ' hash of password: ' + hashString);
+          console.log(row);
+          console.log('Invalid username or password');
+          
+          response.redirect('/login.html');
+          response.end();
+        }
+      }
+    });
+  } else {
+    response.send('Please enter a username and password!');
+    response.end();
+  }
+});
+
+//--Credential Stuff--//
 async function saveCredentials(username, password) {
   var hashString = CryptoJS.SHA512(password).toString();
   db.run(`INSERT INTO users (username, password) VALUES (?, ?)`, [username, hashString]);
@@ -150,44 +191,7 @@ function checkPWComplexity() {
 
 }
 
-
-//login stuff
-
-app.post('/auth', function (request, response) {
-  let username = request.body.username;
-  let password = request.body.password;
-  var hashString = CryptoJS.SHA512(password).toString()
-  console.log(request);
-  if (username && password) {
-    db.get(`SELECT * FROM users WHERE username = ? AND password = ?`, [username, hashString], (err, row) => {
-      if (err) {
-        console.error(err);
-      } else {
-        if (row) {
-          console.log('Login sucessful');
-          console.log('username input: ' + username + ' password input: ' + password + ' hash of password: ' + hashString);
-          //console.log(row);
-          response.cookie("user",{
-            Username: username,
-            LastLogin: new Date().getTime(),
-            LastLogout: request.cookies.user.LastLogout
-          });
-          response.redirect('/index.html');
-        } else {
-          console.log('username input: ' + username + ' password input: ' + password + ' hash of password: ' + hashString);
-          console.log(row);
-          console.log('Invalid username or password');
-          
-          response.redirect('/login.html');
-          response.end();
-        }
-      }
-    });
-  } else {
-    response.send('Please enter a username and password!');
-    response.end();
-  }
-});
+//--Date Conversions--//
 
 // Converts a number of weeks to a date;
 // @Returns this date + (weeks); can be used for expire date;
