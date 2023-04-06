@@ -33,19 +33,18 @@ db.run('CREATE TABLE IF NOT EXISTS users (username TEXT PRIMARY KEY, password TE
 });
 
 app.get('/', (req, res) => {
-  console.log('/ request ckys: '+req.cookies.user.LastLogin+'; '+req.cookies.user.LastLogout);
-  let lastLogin = req.cookies.user.LastLogin;
-  let lastLogout = req.cookies.user.LastLogout;
-  if(lastLogin <= lastLogout)
-    res.send('/login.html');
-  else
-    res.send('/index.html');
+  if(req.cookies.user){
+    let lastLogin = req.cookies.user.LastLogin;
+    let lastLogout = req.cookies.user.LastLogout;
+    if(lastLogin > lastLogout)
+      res.redirect('/index.html');
+  }
+  res.redirect('/login.html')
 });
 
 //Registration form action
 app.post('/addUser', (req, res)=>{
   const {username, password}=req.body;
-  console.log('/addUser request ckys: '+req.cookies.user.LastLogin+'; '+req.cookies.user.LastLogout);
   if(checkCredentials(username,password)){
     res.cookie("user",{
       Username: username,
@@ -69,8 +68,7 @@ app.get('/user', (req, res) => {
 });
 
 app.post('/logout', (req, res) => {
-  if(req.cookies.user){ // If 'user' cookie exists in req.cookies, then log it & set res.cookie;
-    console.log('/logout request ckys: ',req.cookies);
+  if(req.cookies.user && req.cookies.user.Username && req.cookies.user.LastLogin){ // If 'user' cookie(& its username&lastlogin values) exist in req.cookies, then set res.cookie;
     res.cookie("user",{
       Username: req.cookies.user.Username,
       LastLogin: req.cookies.user.LastLogin,
@@ -217,9 +215,6 @@ function hoursToDate(hours) {
   return d.toUTCString();
 }
 
-function getCurrentDate(){
-  return new Date().toUTCString();
-}
 
 function changeName() {
   
