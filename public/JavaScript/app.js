@@ -79,9 +79,30 @@ app.post('/logout', (req, res) => {
 });
 
 //Listen for GETs & POSTs & stuff
-app.listen(5500, () => {
-  console.log('Server is running on http://localhost:5500');
-});
+// app.listen(5500, () => {
+//   console.log('Server is running on http://localhost:5500');
+// });
+
+// Using require to access http module
+const http = require("http");
+ 
+// Port number
+const PORT = process.env.PORT || 5500;
+ 
+// Creating server
+const server = http.createServer(
+    // Server listening on port 2020
+    function (req, res) {
+        
+        // Write a response to the client
+        res.end();
+    }
+)
+    app.listen(PORT, error => {
+        // Prints in console
+        console.log(`Server listening on port ${PORT}`)
+        console.log('Server is running on http://localhost:' + PORT);
+    });
 
 //--Login stuff--//
 
@@ -223,3 +244,6 @@ function changeName() {
     document.getElementById("usersname").innerHTML = funny;
   });
 }
+
+
+//======================Server aspect======================
