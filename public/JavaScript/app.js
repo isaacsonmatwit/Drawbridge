@@ -24,7 +24,7 @@ const db = new sql3.Database('../users.db', (err)=> {
 });
 
 //Create the users table
-db.run('CREATE TABLE IF NOT EXISTS users (username TEXT PRIMARY KEY, password TEXT)', (err)=> {
+db.run('CREATE TABLE IF NOT EXISTS users (username TEXT PRIMARY KEY, password TEXT, lastlogin BIGINT, lastlogout BIGINT)', (err)=> {
   if (err) {
       return console.error(err.message);
     } else{
@@ -58,9 +58,8 @@ app.post('/addUser', (req, res)=>{
 
 app.get('/user', (req, res) => {
   db.all('SELECT * FROM users', [], (err, rows) => {
-    if (err) {
+    if (err)
       return console.error(err.message);
-    }
     if(res.cookie.user)
       res.cookie("user",req.cookies.user);
     res.send(rows);
@@ -69,11 +68,13 @@ app.get('/user', (req, res) => {
 
 app.post('/logout', (req, res) => {
   if(req.cookies.user && req.cookies.user.Username && req.cookies.user.LastLogin){ // If 'user' cookie(& its username&lastlogin values) exist in req.cookies, then set res.cookie;
+    const currTime = new Date().getTime();
     res.cookie("user",{
       Username: req.cookies.user.Username,
       LastLogin: req.cookies.user.LastLogin,
-      LastLogout: new Date().getTime()
+      LastLogout: currTime
     });
+    db.run(`UPDATE users SET lastlogout = '`+currTime+`' WHERE username = '`+username+`';`);
   }
   res.redirect('/login.html');
 });
@@ -106,12 +107,13 @@ const server = http.createServer(
 
 //--Login stuff--//
 
-app.post('/auth', function (request, response) {
+app.post('/auth', (request, response) => {
   let username = request.body.username;
   let password = request.body.password;
   var hashString = CryptoJS.SHA512(password).toString();
   if (username && password) {
     db.get(`SELECT * FROM users WHERE username = ? AND password = ?`, [username, hashString], (err, row) => {
+      console.log(row);
       if (err) {
         console.error(err);
       } else {
@@ -119,11 +121,13 @@ app.post('/auth', function (request, response) {
           console.log('Login sucessful');
           console.log('username input: ' + username + ' password input: ' + password + ' hash of password: ' + hashString);
           //console.log(row);
+          const currTime = new Date().getTime();
           response.cookie("user",{
             Username: username,
-            LastLogin: new Date().getTime(),
-            LastLogout: request.cookies.user.LastLogout
+            LastLogin: currTime,
+            LastLogout: row.lastlogout
           });
+          db.run(`UPDATE users SET lastlogin = '`+currTime+`' WHERE username = '`+username+`';`);
           response.redirect('/index.html');
         } else {
           console.log('username input: ' + username + ' password input: ' + password + ' hash of password: ' + hashString);
@@ -144,7 +148,7 @@ app.post('/auth', function (request, response) {
 //--Credential Stuff--//
 async function saveCredentials(username, password) {
   var hashString = CryptoJS.SHA512(password).toString();
-  db.run(`INSERT INTO users (username, password) VALUES (?, ?)`, [username, hashString]);
+  db.run(`INSERT INTO users (username, password, lastlogin, lastlogout) VALUES (?, ?, ?, ?)`, [username, hashString, new Date().getTime(), 0]);
   const users = db.all(`SELECT * FROM users`);
   console.log(users);
 }
@@ -241,7 +245,7 @@ function changeName() {
   
   console.log("user logged in!");
   db.get(`SELECT * FROM users`, [username], (funny) => {
-    document.getElementById("usersname").innerHTML = funny;
+    document.getElementById("usersname").innerHTML = document.cookie.user.Username;
   });
 }
 
