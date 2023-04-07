@@ -74,9 +74,17 @@ app.post('/logout', (req, res) => {
       LastLogin: req.cookies.user.LastLogin,
       LastLogout: currTime
     });
-    db.run(`UPDATE users SET lastlogout = '`+currTime+`' WHERE username = '`+username+`';`);
+    db.run(`UPDATE users SET lastlogout = '`+currTime+`' WHERE username = '`+req.cookies.user.Username+`';`);
   }
   res.redirect('/login.html');
+});
+
+app.get('/getUser', (req, res) => {
+  db.all('SELECT username FROM users', [username], (err, rows) => {
+    if (err)
+      return console.error(err.message);
+    
+  });
 });
 
 //Listen for GETs & POSTs & stuff
@@ -94,16 +102,15 @@ const PORT = process.env.PORT || 5500;
 const server = http.createServer(
     // Server listening on port 2020
     function (req, res) {
-        
         // Write a response to the client
         res.end();
     }
-)
-    app.listen(PORT, error => {
-        // Prints in console
-        console.log(`Server listening on port ${PORT}`)
-        console.log('Server is running on http://localhost:' + PORT);
-    });
+);
+app.listen(PORT, error => {
+    // Prints in console
+    console.log(`Server listening on port ${PORT}`)
+    console.log('Server is running on http://localhost:' + PORT);
+});
 
 //--Login stuff--//
 
@@ -119,7 +126,7 @@ app.post('/auth', (request, response) => {
       } else {
         if (row) {
           console.log('Login sucessful');
-          console.log('username input: ' + username + ' password input: ' + password + ' hash of password: ' + hashString);
+          console.log('username: ' + username + ' | password: ' + password + ' | hash of password: ' + hashString);
           //console.log(row);
           const currTime = new Date().getTime();
           response.cookie("user",{
@@ -130,7 +137,7 @@ app.post('/auth', (request, response) => {
           db.run(`UPDATE users SET lastlogin = '`+currTime+`' WHERE username = '`+username+`';`);
           response.redirect('/index.html');
         } else {
-          console.log('username input: ' + username + ' password input: ' + password + ' hash of password: ' + hashString);
+          console.log('username: ' + username + ' | password: ' + password + ' | hash: ' + hashString);
           console.log(row);
           console.log('Invalid username or password');
           
@@ -144,7 +151,7 @@ app.post('/auth', (request, response) => {
     response.end();
   }
 });
-
+//Password%5
 //--Credential Stuff--//
 async function saveCredentials(username, password) {
   var hashString = CryptoJS.SHA512(password).toString();
@@ -214,6 +221,22 @@ function checkPWComplexity() {
 
 }
 
+function decodeCookie(encodedCookie='') {
+  return encodedCookie.replace('j','').replace('%3A','').replaceAll('%22','"').replaceAll('%3A',':').replaceAll('%2C',',').replaceAll('%7B','{').replaceAll('%7D','}')
+}
+
+function getUsernameFromCookie(decodedCookie='') {
+  return decodedCookie.slice(6,-1).split(',')[0].slice(12,-1);
+}
+
+function getLastloginFromCookie(decodedCookie='') {
+  return decodedCookie.slice(6,-1).split(',')[1].slice(12);
+}
+
+function getLastlogoutFromCookie(decodedCookie='') {
+  return decodedCookie.slice(6,-1).split(',')[2].slice(13);
+}
+
 //--Date Conversions--//
 
 // Converts a number of weeks to a date;
@@ -241,13 +264,8 @@ function hoursToDate(hours) {
 }
 
 
-function changeName() {
-  
-  console.log("user logged in!");
-  db.get(`SELECT * FROM users`, [username], (funny) => {
-    document.getElementById("usersname").innerHTML = document.cookie.user.Username;
-  });
-}
-
-
 //======================Server aspect======================
+
+function changeName(){
+  document.getElementById('usersname').innerHTML = getUsernameFromCookie(decodeCookie(document.cookie));
+}
