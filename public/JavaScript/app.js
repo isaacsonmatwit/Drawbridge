@@ -109,7 +109,7 @@ const server = http.createServer(
 app.listen(PORT, error => {
     // Prints in console
     console.log(`Server listening on port ${PORT}`)
-    console.log('Server is running on http://localhost:' + PORT);
+    console.log('Server is running on http://localhost:' + PORT+ '/login.html');
 });
 
 //--Login stuff--//
@@ -221,6 +221,21 @@ function checkPWComplexity() {
 
 }
 
+function togglePW() {
+  let passwordField = document.getElementById("password");
+  let confirmPasswordField = document.getElementById("passwordConfirm");
+
+  if (passwordField.type === "password") {
+    passwordField.type = "text";
+    confirmPasswordField.type = "text";
+  }
+  else {
+    passwordField.type = "password";
+    confirmPasswordField.type = "password";
+  }
+}
+
+//--ACTUAL Cookie Stuff--//
 function decodeCookie(encodedCookie='') {
   return encodedCookie.replace('j','').replace('%3A','').replaceAll('%22','"').replaceAll('%3A',':').replaceAll('%2C',',').replaceAll('%7B','{').replaceAll('%7D','}')
 }
