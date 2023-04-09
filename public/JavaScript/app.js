@@ -32,7 +32,7 @@ db.run('CREATE TABLE IF NOT EXISTS users (username TEXT PRIMARY KEY, password TE
     }
 });
 
-app.get('/', (req, res) => {
+/*app.get('/', (req, res) => {
   if(req.cookies.user){
     let lastLogin = req.cookies.user.LastLogin;
     let lastLogout = req.cookies.user.LastLogout;
@@ -40,7 +40,7 @@ app.get('/', (req, res) => {
       res.redirect('/index.html');
   }
   res.redirect('/login.html')
-});
+});*/
 
 //Registration form action
 app.post('/addUser', (req, res)=>{
@@ -151,7 +151,7 @@ app.post('/auth', (request, response) => {
     response.end();
   }
 });
-//Password%5
+
 //--Credential Stuff--//
 async function saveCredentials(username, password) {
   var hashString = CryptoJS.SHA512(password).toString();
@@ -221,6 +221,48 @@ function checkPWComplexity() {
 
 }
 
+//--ACTUAL Cookie Stuff--//
+
+function decodeCookie(encodedCookie='') {
+  return encodedCookie.replace('j','').replace('%3A','').replaceAll('%22','"').replaceAll('%3A',':').replaceAll('%2C',',').replaceAll('%7B','{').replaceAll('%7D','}')
+}
+function getUsernameFromCookie(decodedCookie='') {
+  return decodedCookie.slice(6,-1).split(',')[0].slice(12,-1);
+}
+function getLastloginFromCookie(decodedCookie='') {
+  return decodedCookie.slice(6,-1).split(',')[1].slice(12);
+}
+function getLastlogoutFromCookie(decodedCookie='') {
+  return decodedCookie.slice(6,-1).split(',')[2].slice(13);
+}
+
+//--Date Conversions--//
+
+// Converts a number of weeks to a date;
+// @Returns this date + (weeks); can be used for expire date;
+function weeksToDate(weeks) {
+  const d = new Date();
+  d.setTime(d.getTime() + (weeks*7*24*60*60*1000));
+  return d.toUTCString();
+}
+// Converts a number of days to a date;
+// @Returns this date + (days); can be used for expire date;
+function daysToDate(days) {
+  const d = new Date();
+  d.setTime(d.getTime() + (days*24*60*60*1000));
+  return d.toUTCString();
+}
+// Converts a number of hours to a date;
+// @Returns this date + (hours); can be used for expire date;
+function hoursToDate(hours) {
+  const d = new Date();
+  d.setTime(d.getTime() + (hours*60*60*1000));
+  return d.toUTCString();
+}
+
+//--Other Functionality--//
+
+// Toggles password visibility
 function togglePW() {
   let passwordField = document.getElementById("password");
   let confirmPasswordField = document.getElementById("passwordConfirm");
@@ -235,52 +277,14 @@ function togglePW() {
   }
 }
 
-//--ACTUAL Cookie Stuff--//
-function decodeCookie(encodedCookie='') {
-  return encodedCookie.replace('j','').replace('%3A','').replaceAll('%22','"').replaceAll('%3A',':').replaceAll('%2C',',').replaceAll('%7B','{').replaceAll('%7D','}')
+// Sends the message when enter key is pressed while message-box is active
+function enterMessage() {
+  document.getElementById('btnSend').click();
+  document.getElementById('txtSend').value = '';
 }
 
-function getUsernameFromCookie(decodedCookie='') {
-  return decodedCookie.slice(6,-1).split(',')[0].slice(12,-1);
-}
-
-function getLastloginFromCookie(decodedCookie='') {
-  return decodedCookie.slice(6,-1).split(',')[1].slice(12);
-}
-
-function getLastlogoutFromCookie(decodedCookie='') {
-  return decodedCookie.slice(6,-1).split(',')[2].slice(13);
-}
-
-//--Date Conversions--//
-
-// Converts a number of weeks to a date;
-// @Returns this date + (weeks); can be used for expire date;
-function weeksToDate(weeks) {
-  const d = new Date();
-  d.setTime(d.getTime() + (weeks*7*24*60*60*1000));
-  return d.toUTCString();
-}
-
-// Converts a number of days to a date;
-// @Returns this date + (days); can be used for expire date;
-function daysToDate(days) {
-  const d = new Date();
-  d.setTime(d.getTime() + (days*24*60*60*1000));
-  return d.toUTCString();
-}
-
-// Converts a number of hours to a date;
-// @Returns this date + (hours); can be used for expire date;
-function hoursToDate(hours) {
-  const d = new Date();
-  d.setTime(d.getTime() + (hours*60*60*1000));
-  return d.toUTCString();
-}
-
-
-//======================Server aspect======================
-
+// Sets the username in the greeting banner
 function changeName(){
   document.getElementById('usersname').innerHTML = getUsernameFromCookie(decodeCookie(document.cookie));
 }
+//Password%5
