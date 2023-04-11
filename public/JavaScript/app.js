@@ -45,26 +45,15 @@ db.run('CREATE TABLE IF NOT EXISTS users (username TEXT PRIMARY KEY, password TE
 //Registration form action
 app.post('/addUser', (req, res)=>{
   const {username, password}=req.body;
-  console.log("Checking username...");
-  db.get(`SELECT * FROM users WHERE username = ?`, [username], (err, row) => {
-    if(err) console.log(err.message);
-    else {
-      if(row===undefined && checkCredentials(username,password)){
-        res.cookie("user",{
-          Username: username,
-          LastLogin: new Date().getTime(),
-          LastLogout: 0
-        });
-        res.redirect('/index.html');
-      } else {
-        if (row===undefined){
-          //Somehow alert the user with the message: 'Username has already been taken' ( alert() wont work ) 
-        }
-        res.redirect('/register.html');
-      }
-    }
-  });
-  
+  if(checkCredentials(username,password)){
+    res.cookie("user",{
+      Username: username,
+      LastLogin: new Date().getTime(),
+      LastLogout: 0
+    });
+    res.redirect('/index.html');
+  } else
+    res.redirect('/register.html');
 });
 
 app.get('/user', (req, res) => {
@@ -176,7 +165,6 @@ function checkCredentials(username,password) {
   let pwd = "" + password;
   if (pwd.match(strongPassword)) {
     console.log('Password check passed!');
-
     if (username != 0) {
       console.log('attempting to save credentials..');
       saveCredentials(username, password);
@@ -300,5 +288,3 @@ function changeName(){
   document.getElementById('usersname').innerHTML = getUsernameFromCookie(decodeCookie(document.cookie));
 }
 //Password%5
-
-// Gets user's linked other-users 
