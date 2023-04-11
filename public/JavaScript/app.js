@@ -1,5 +1,4 @@
 const express = require('express');
-//const sqlite = require('sqlite');
 const sqlite3 = require('sqlite3');
 const bodyParser = require('body-parser');
 const app = express();
@@ -17,6 +16,9 @@ app.use(cookieParser());
 
 //Create the db instance
 const db = new sql3.Database('../users.db', (err)=> {
+    if (err)
+      return console.error(err.message);
+    console.log('Connected to the users.db SQLite database.');
     if (err)
       return console.error(err.message);
     console.log('Connected to the users.db SQLite database.');
@@ -52,7 +54,25 @@ app.post('/addUser', (req, res)=>{
       }
     }
   });
-  
+  console.log("Checking username...");
+  db.get(`SELECT * FROM users WHERE username = ?`, [username], (err, row) => {
+    if(err) console.log(err.message);
+    else {
+      if(row===undefined && checkCredentials(username,password)){
+        res.cookie("user",{
+          Username: username,
+          LastLogin: new Date().getTime(),
+          LastLogout: 0
+        });
+        res.redirect('/index.html');
+      } else {
+        if (row!==undefined)
+          res.cookie("user",{Username: '%%null:'+username});
+        console.log('Username check failed...');
+        res.redirect('/register.html');
+      }
+    }
+  });
 });
 
 app.get('/user', (req, res) => {
@@ -79,10 +99,15 @@ app.post('/logout', (req, res) => {
 });
 
 app.get('/getUser', (req, res) => {
-  db.all('SELECT username FROM users', [username], (err, rows) => {
+  db.all('SELECT username, lastlogin, lastlogout FROM users WHERE username='+req.body.username, [req.body.username], (err, row) => {
     if (err)
       return console.error(err.message);
-    
+    else if(row!=undefined)
+      res.cookie("reqUser",{
+        Username: row.username,
+        LastLogin: row.lastlogin,
+        LastLogout: row.lastlogout
+      });
   });
 });
 
@@ -120,8 +145,6 @@ app.post('/auth', (request, response) => {
       } else {
         if (row) {
           console.log('Login sucessful');
-          console.log('username: ' + username + ' | password: ' + password + ' | hash of password: ' + hashString);
-          //console.log(row);
           const currTime = new Date().getTime();
           response.cookie("user",{
             Username: username,
@@ -131,10 +154,7 @@ app.post('/auth', (request, response) => {
           db.run(`UPDATE users SET lastlogin = '`+currTime+`' WHERE username = '`+username+`';`);
           response.redirect('/index.html');
         } else {
-          console.log('username: ' + username + ' | password: ' + password + ' | hash: ' + hashString);
-          console.log(row);
           console.log('Invalid username or password');
-          
           response.redirect('/login.html');
           response.end();
         }
@@ -151,7 +171,6 @@ async function saveCredentials(username, password) {
   var hashString = CryptoJS.SHA512(password).toString();
   db.run(`INSERT INTO users (username, password, lastlogin, lastlogout) VALUES (?, ?, ?, ?)`, [username, hashString, new Date().getTime(), 0]);
   const users = db.all(`SELECT * FROM users`);
-  console.log(users);
 }
 
 function checkCredentials(username,password) {
@@ -159,7 +178,6 @@ function checkCredentials(username,password) {
   let pwd = "" + password;
   if (pwd.match(strongPassword)) {
     console.log('Password check passed!');
-
     if (username != 0) {
       console.log('attempting to save credentials..');
       saveCredentials(username, password);
@@ -241,6 +259,7 @@ function weeksToDate(weeks) {
   return d.toUTCString();
 }
 
+
 // Converts a number of days to a date;
 // @Returns this date + (days); can be used for expire date;
 function daysToDate(days) {
@@ -249,11 +268,20 @@ function daysToDate(days) {
   return d.toUTCString();
 }
 
+
 // Converts a number of hours to a date;
 // @Returns this date + (hours); can be used for expire date;
 function hoursToDate(hours) {
   const d = new Date();
   d.setTime(d.getTime() + (hours*60*60*1000));
+  return d.toUTCString();
+}
+
+// Converts a number of seconds to a date;
+// @Returns this date + (seconds); can be used for expire date;
+function secondsToDate(seconds) {
+  const d = new Date();
+  d.setTime(d.getTime() + (seconds*1000));
   return d.toUTCString();
 }
 
@@ -311,6 +339,3 @@ function checkForInvalidUsername() {
       alert('Invalid username: `'+username+'`');
   }
 }
-//Password%5
-
-// Gets user's linked other-users 
