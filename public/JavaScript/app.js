@@ -1,5 +1,5 @@
 const express = require('express');
-const sqlite = require('sqlite');
+//const sqlite = require('sqlite');
 const sqlite3 = require('sqlite3');
 const bodyParser = require('body-parser');
 const app = express();
@@ -17,43 +17,42 @@ app.use(cookieParser());
 
 //Create the db instance
 const db = new sql3.Database('../users.db', (err)=> {
-    if (err) {
-        return console.error(err.message);
-      }
-      console.log('Connected to the users.db SQLite database.');
+    if (err)
+      return console.error(err.message);
+    console.log('Connected to the users.db SQLite database.');
 });
 
 //Create the users table
 db.run('CREATE TABLE IF NOT EXISTS users (username TEXT PRIMARY KEY, password TEXT, lastlogin BIGINT, lastlogout BIGINT)', (err)=> {
-  if (err) {
+  if (err)
       return console.error(err.message);
-    } else{
+  else
       console.log("New table created");
-    }
 });
-
-/*app.get('/', (req, res) => {
-  if(req.cookies.user){
-    let lastLogin = req.cookies.user.LastLogin;
-    let lastLogout = req.cookies.user.LastLogout;
-    if(lastLogin > lastLogout)
-      res.redirect('/index.html');
-  }
-  res.redirect('/login.html')
-});*/
 
 //Registration form action
 app.post('/addUser', (req, res)=>{
   const {username, password}=req.body;
-  if(checkCredentials(username,password)){
-    res.cookie("user",{
-      Username: username,
-      LastLogin: new Date().getTime(),
-      LastLogout: 0
-    });
-    res.redirect('/index.html');
-  } else
-    res.redirect('/register.html');
+  console.log("Checking username...");
+  db.get(`SELECT * FROM users WHERE username = ?`, [username], (err, row) => {
+    if(err) console.log(err.message);
+    else {
+      if(row===undefined && checkCredentials(username,password)){
+        res.cookie("user",{
+          Username: username,
+          LastLogin: new Date().getTime(),
+          LastLogout: 0
+        });
+        res.redirect('/index.html');
+      } else {
+        if (row!==undefined)
+          res.cookie("user",{Username: '%%null:'+username});
+        console.log('Username check failed...');
+        res.redirect('/register.html');
+      }
+    }
+  });
+  
 });
 
 app.get('/user', (req, res) => {
@@ -86,11 +85,6 @@ app.get('/getUser', (req, res) => {
     
   });
 });
-
-//Listen for GETs & POSTs & stuff
-// app.listen(5500, () => {
-//   console.log('Server is running on http://localhost:5500');
-// });
 
 // Using require to access http module
 const http = require("http");
@@ -165,6 +159,7 @@ function checkCredentials(username,password) {
   let pwd = "" + password;
   if (pwd.match(strongPassword)) {
     console.log('Password check passed!');
+
     if (username != 0) {
       console.log('attempting to save credentials..');
       saveCredentials(username, password);
@@ -224,7 +219,7 @@ function checkPWComplexity() {
 //--ACTUAL Cookie Stuff--//
 
 function decodeCookie(encodedCookie='') {
-  return encodedCookie.replace('j','').replace('%3A','').replaceAll('%22','"').replaceAll('%3A',':').replaceAll('%2C',',').replaceAll('%7B','{').replaceAll('%7D','}')
+  return encodedCookie.replace('j','').replace('%3A','').replaceAll('%22','"').replaceAll('%3A',':').replaceAll('%2C',',').replaceAll('%7B','{').replaceAll('%7D','}').replaceAll('%25','%');
 }
 function getUsernameFromCookie(decodedCookie='') {
   return decodedCookie.slice(6,-1).split(',')[0].slice(12,-1);
@@ -245,6 +240,7 @@ function weeksToDate(weeks) {
   d.setTime(d.getTime() + (weeks*7*24*60*60*1000));
   return d.toUTCString();
 }
+
 // Converts a number of days to a date;
 // @Returns this date + (days); can be used for expire date;
 function daysToDate(days) {
@@ -252,11 +248,20 @@ function daysToDate(days) {
   d.setTime(d.getTime() + (days*24*60*60*1000));
   return d.toUTCString();
 }
+
 // Converts a number of hours to a date;
 // @Returns this date + (hours); can be used for expire date;
 function hoursToDate(hours) {
   const d = new Date();
   d.setTime(d.getTime() + (hours*60*60*1000));
+  return d.toUTCString();
+}
+
+// Converts a number of seconds to a date;
+// @Returns this date + (seconds); can be used for expire date;
+function secondsToDate(seconds) {
+  const d = new Date();
+  d.setTime(d.getTime() + (seconds*1000));
   return d.toUTCString();
 }
 
@@ -284,7 +289,28 @@ function enterMessage() {
 }
 
 // Sets the username in the greeting banner
-function changeName(){
+function changeName() {
   document.getElementById('usersname').innerHTML = getUsernameFromCookie(decodeCookie(document.cookie));
 }
+
+// Checks if an invalid username was entered
+function checkForInvalidUsername() {
+  if(document.cookie){
+    let data = getUsernameFromCookie(decodeCookie(document.cookie));
+    let nullity = data.substring(0,7);
+    let username = data.slice(7);
+    console.log(data);
+    console.log(nullity);
+    console.log(username);
+    if(username.length!=0)
+      if(nullity=='%%null:'){
+        alert('Username `'+username+'` has been taken.');
+        document.cookie = 'user=; expires='+secondsToDate(1);
+      }
+    else
+      alert('Invalid username: `'+username+'`');
+  }
+}
 //Password%5
+
+// Gets user's linked other-users 
