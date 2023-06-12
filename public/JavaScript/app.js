@@ -43,6 +43,31 @@ app.post('/addUser', (req, res)=>{
     res.redirect('/register.html');
 });
 
+//Password Reset
+app.post('/resetPassword', (req, res)=>{
+  const {username, email, password}=req.body;
+  if(checkPassword(username, email, password))
+    res.redirect('/index.html');
+  else
+    res.redirect('/ForgotPassword.html');
+});
+
+//check password for password reset
+function checkPassword(username, email, password){
+  let strongPassword = '(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})';
+  let pwd = "" + password;
+  if (pwd.match(strongPassword)) {
+    console.log('Password check passed!');
+    updatePassword(username, email, password);
+  }
+}
+
+//update password in db
+async function updatePassword(username, email, newPassword){
+  var hashString = CryptoJS.SHA512(password).toString()
+  db.run('UPDATE users SET password = ? WHERE username = ? AND email = ?'[newPassword, username, email]);
+}
+
 app.get('/user', (req, res) => {
   db.all('SELECT * FROM users', [], (err, rows) => {
     if (err) {
@@ -164,3 +189,4 @@ app.post('/auth', function (request, response) {
     response.end();
   }
 });
+
