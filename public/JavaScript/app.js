@@ -21,7 +21,7 @@ const db = new sql3.Database('../users.db', (err)=> {
 });
 
 //Create the users table
-db.run('CREATE TABLE IF NOT EXISTS users (username TEXT PRIMARY KEY, password TEXT)', (err)=> {
+db.run('CREATE TABLE IF NOT EXISTS users (username TEXT PRIMARY KEY, email TEXT, password TEXT)', (err)=> {
   if (err) {
       return console.error(err.message);
     } else{
@@ -35,9 +35,9 @@ app.get('/', (req, res) => {
 
 //Registration form action
 app.post('/addUser', (req, res)=>{
-  const {username, password}=req.body;
+  const {username, email, password}=req.body;
   console.log(req.body);
-  if(checkCredentials(username,password))
+  if(checkCredentials(username, email, password))
     res.redirect('/index.html');
   else
     res.redirect('/register.html');
@@ -57,26 +57,26 @@ app.listen(5500, () => {
   console.log('Server is running on http://localhost:5500');
 });
 
-async function saveCredentials(username, password) {
+async function saveCredentials(username, email, password) {
   //var sha512 = CryptoJS.SHA512(password); //Variable sha512 isn't used anywhere else;
   var hashString = CryptoJS.SHA512(password).toString()
   //console.log('-> saveCredentials(...)');
   //console.log('-> await db.run(Insert...)');
-  db.run(`INSERT INTO users (username, password) VALUES (?, ?)`, [username, hashString]);
+  db.run(`INSERT INTO users (username, email, password) VALUES (?, ?, ?)`, [username, email, hashString]);
   //console.log(`User ${username} saved to the database`);
   //console.log('-> const users = await db.all(`SELECT * FROM users`);');
   const users = db.all(`SELECT * FROM users`);
   console.log(users);
 }
 
-function checkCredentials(username,password) {
+function checkCredentials(username, email, password) {
   let strongPassword = '(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})';
   let pwd = "" + password;
   if (pwd.match(strongPassword)) {
     console.log('Password check passed!');
     if (username != 0) {
       console.log('attempting to save credentials..');
-      saveCredentials(username, password);
+      saveCredentials(username, email, password);
       return true;
     }
   }
@@ -134,32 +134,33 @@ function checkPWComplexity() {
 //login stuff
 
 app.post('/auth', function (request, response) {
-  let username = request.body.username;
+  let email = request.body.email;
   let password = request.body.password;
   var hashString = CryptoJS.SHA512(password).toString()
 
-  if (username && password) {
-    db.get(`SELECT * FROM users WHERE username = ? AND password = ?`, [username, hashString], (err, row) => {
+  if (email && password) {
+    db.get(`SELECT * FROM users WHERE email = ? AND password = ?`, [email, hashString], (err, row) => {
       if (err) {
         console.error(err);
       } else {
         if (row) {
           console.log('Login sucessful');
-          console.log('username input: ' + username + ' password input: ' + password + ' hash of password: ' + hashString);
+          // console.log('username input: ' + username + ' password input: ' + password + ' hash of password: ' + hashString);
+          console.log('email input: ' + email + ' password input: ' + password + ' hash of password: ' + hashString);
           console.log(row);
           response.redirect('/index.html');
         } else {
-          console.log('username input: ' + username + ' password input: ' + password + ' hash of password: ' + hashString);
+          console.log('email input: ' + email + ' password input: ' + password + ' hash of password: ' + hashString);
           console.log(row);
           console.log('Invalid username or password');
           
-          response.redirect('/login.html');
+          response.redirect('/Login.html');
           response.end();
         }
       }
     });
   } else {
-    response.send('Please enter a username and password!');
+    response.send('Please enter an email and password!');
     response.end();
   }
 });
