@@ -301,13 +301,6 @@ a:active {
     font-family: Roboto Mono;
 }
 
-dialog {
-    background-color: #14171d;
-    color:white;
-    border:none;
-    border-radius: 5px;
-}
-
 button {
     background-color: #0F8B8D;
     border:none;
