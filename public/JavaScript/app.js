@@ -64,7 +64,7 @@ function checkPassword(username, email, password){
 
 //update password in db
 async function updatePassword(username, email, newPassword){
-  var hashString = CryptoJS.SHA512(password).toString()
+  var hashString = CryptoJS.SHA512(newPassword).toString()
   db.run('UPDATE users SET password = ? WHERE username = ? AND email = ?'[newPassword, username, email]);
 }
 
@@ -96,17 +96,25 @@ async function saveCredentials(username, email, password) {
 
 function checkCredentials(username, email, password) {
   let strongPassword = '(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})';
+  const validEmail = new RegExp(/^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/, "gm");
+  const isValidEmail = validEmail.test(email);
   let pwd = "" + password;
   if (pwd.match(strongPassword)) {
     console.log('Password check passed!');
-    if (username != 0) {
-      console.log('attempting to save credentials..');
-      saveCredentials(username, email, password);
-      return true;
+    if (isValidEmail){
+      console.log('Email check passed!');
+      if (username != 0) {
+        console.log('attempting to save credentials..');
+        saveCredentials(username, email, password);
+        return true;
+      }
+    }else{
+      console.log('Email check failed: '+email.match(validEmail)+' : usr='+username+', email='+email+', pwd='+password);
     }
-  }
-  console.log('Password check failed: '+pwd.match(strongPassword)+' : usr='+username+', pwd='+password);
+  }else{
+    console.log('Password check failed: '+pwd.match(strongPassword)+' : usr='+username+', pwd='+password);
   return false;
+  }
 }
 
 function check() {
