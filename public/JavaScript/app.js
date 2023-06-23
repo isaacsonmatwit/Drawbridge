@@ -12,21 +12,22 @@ app.use(express.static(cwd));//Use the Current Working Directory
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+
 //Create the db instance
-const db = new sql3.Database('../users.db', (err)=> {
-    if (err) {
-        return console.error(err.message);
-      }
-      console.log('Connected to the users.db SQLite database.');
+const db = new sql3.Database('../users.db', (err) => {
+  if (err) {
+    return console.error(err.message);
+  }
+  console.log('Connected to the users.db SQLite database.');
 });
 
 //Create the users table
-db.run('CREATE TABLE IF NOT EXISTS users (username TEXT PRIMARY KEY, email TEXT, password TEXT)', (err)=> {
+db.run('CREATE TABLE IF NOT EXISTS users (username TEXT PRIMARY KEY, email TEXT, password TEXT)', (err) => {
   if (err) {
-      return console.error(err.message);
-    } else{
-      console.log("New table created");
-    }
+    return console.error(err.message);
+  } else {
+    console.log("New table created");
+  }
 });
 
 app.get('/', (req, res) => {
@@ -34,26 +35,26 @@ app.get('/', (req, res) => {
 });
 
 //Registration form action
-app.post('/addUser', (req, res)=>{
-  const {username, email, password}=req.body;
+app.post('/addUser', (req, res) => {
+  const { username, email, password } = req.body;
   console.log(req.body);
-  if(checkCredentials(username, email, password))
+  if (checkCredentials(username, email, password))
     res.redirect('/index.html');
   else
     res.redirect('/register.html');
 });
 
 //Password Reset
-app.post('/resetPassword', (req, res)=>{
-  const {username, email, password}=req.body;
-  if(checkPassword(username, email, password))
+app.post('/resetPassword', (req, res) => {
+  const { username, email, password } = req.body;
+  if (checkPassword(username, email, password))
     res.redirect('/index.html');
   else
     res.redirect('/ForgotPassword.html');
 });
 
 //check password for password reset
-function checkPassword(username, email, password){
+function checkPassword(username, email, password) {
   let strongPassword = '(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})';
   let pwd = "" + password;
   if (pwd.match(strongPassword)) {
@@ -63,7 +64,7 @@ function checkPassword(username, email, password){
 }
 
 //update password in db
-async function updatePassword(username, email, newPassword){
+async function updatePassword(username, email, newPassword) {
   var hashString = CryptoJS.SHA512(newPassword).toString()
   db.run('UPDATE users SET password = ? WHERE username = ? AND email = ?'[newPassword, username, email]);
 }
@@ -79,7 +80,7 @@ app.get('/user', (req, res) => {
 
 //Listen for GETs & POSTs & whatnot
 app.listen(5500, () => {
-  console.log('Server is running on http://localhost:5500');
+  console.log('Server is running on http://localhost:5500/login');
 });
 
 async function saveCredentials(username, email, password) {
@@ -101,19 +102,19 @@ function checkCredentials(username, email, password) {
   let pwd = "" + password;
   if (pwd.match(strongPassword)) {
     console.log('Password check passed!');
-    if (isValidEmail){
+    if (isValidEmail) {
       console.log('Email check passed!');
       if (username != 0) {
         console.log('attempting to save credentials..');
         saveCredentials(username, email, password);
         return true;
       }
-    }else{
-      console.log('Email check failed: '+email.match(validEmail)+' : usr='+username+', email='+email+', pwd='+password);
+    } else {
+      console.log('Email check failed: ' + email.match(validEmail) + ' : usr=' + username + ', email=' + email + ', pwd=' + password);
     }
-  }else{
-    console.log('Password check failed: '+pwd.match(strongPassword)+' : usr='+username+', pwd='+password);
-  return false;
+  } else {
+    console.log('Password check failed: ' + pwd.match(strongPassword) + ' : usr=' + username + ', pwd=' + password);
+    return false;
   }
 }
 
@@ -186,7 +187,7 @@ app.post('/auth', function (request, response) {
           console.log('email input: ' + email + ' password input: ' + password + ' hash of password: ' + hashString);
           console.log(row);
           console.log('Invalid username or password');
-          
+
           response.redirect('/Login.html');
           response.end();
         }
@@ -197,4 +198,33 @@ app.post('/auth', function (request, response) {
     response.end();
   }
 });
+
+//auth
+
+const { auth } = require('express-openid-connect');
+
+const config = {
+  authRequired: true,
+  auth0Logout: true,
+  secret: '5JWggSs98cyBigw+ZtSsA7zQ8OhTup79YIaYH+LAOKR1TW6SFkgAyGARbGhgTyTY',
+  baseURL: 'http://localhost:5500',
+  clientID: 'WFDgriTz2ZbmydtnSwMOysD7FVYSxxxA',
+  issuerBaseURL: 'https://dev-pvtnq5oyjmumry6i.us.auth0.com'
+};
+
+// auth router attaches /login, /logout, and /callback routes to the baseURL
+app.use(auth(config));
+
+// req.isAuthenticated is provided from the auth router
+app.get('/', (req, res) => {
+  res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
+});
+
+const { requiresAuth } = require('express-openid-connect');
+
+app.get('/profile', requiresAuth(), (req, res) => {
+  res.send(JSON.stringify(req.oidc.user));
+  console.log("profile: " + JSON.stringify(req.oidc.user))
+});
+
 

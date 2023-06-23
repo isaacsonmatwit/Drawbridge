@@ -26,5 +26,7 @@ function openNav() {
   } 
 
   function signOutBtn() {
-    window.location.replace("login.html");
+    window.location.replace("localhost:5500/logout");
   }
+  
+  

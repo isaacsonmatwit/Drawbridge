@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -16,13 +17,13 @@
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
 </head>
 
-<body onmousemove="setActivity(true);">
+<body>
     <div id="header" class="header">
         <!-- used this for sidebar open and close https://www.w3schools.com/howto/howto_js_collapse_sidebar.asp -->
         <div class="headerContainer buttons">
             <button class="openbtn" id="openbtn" onclick="openNav()">&#9776; Open Sidebar</button>
             <br>
-            <button class="signOutBtn" id="signOutBtn" onclick="signOutBtn()">&#10060; Signout</button>
+            <!-- <button class="signOutBtn" id="signOutBtn" onclick="signOutBtn()">&#10060; Signout</button> -->
         </div>
         <div class="headerContainer welcomeText">
             <h1>Welcome to Drawbridge!</h1>
@@ -39,7 +40,7 @@
                         <br>
                         <div class="status"><i> left 10 hours ago </i></div>
                     </div>
-                    
+
                 </li>
                 <li class="user">
                     <img src="../images/dutch.png" alt="avatar" />
@@ -48,7 +49,7 @@
                         <br>
                         <div class="status"><i>Here now</i></div>
                     </div>
-                    
+
                 </li>
                 <li class="user">
                     <img src="../images/john.png" alt="avatar" />
@@ -57,7 +58,7 @@
                         <br>
                         <div class="status"><i> left 6 hours ago</i></div>
                     </div>
-                    
+
                 </li>
                 <li class="user">
                     <img src="../images/micah.png" alt="avatar" />
@@ -66,7 +67,7 @@
                         <br>
                         <div class="status"><i>Here now</i></div>
                     </div>
-                    
+
                 </li>
                 <li class="user">
                     <img src="../images/javier.png" alt="avatar" />
@@ -75,7 +76,7 @@
                         <br>
                         <div class="status"><i> left 4 hours ago </i></div>
                     </div>
-                    
+
                 </li>
             </ul>
         </aside>
@@ -95,8 +96,9 @@
             <textarea id="mytextarea" readonly></textarea>
             <br>
             <div class="messaging">
-            <input type="text" id="txtSend" />
-            <button type="submit" id="btnSend" value="Send" onclick="CopyToLabel()"><img src="../images/sendlogo.png" height="31" width="auto"></button>
+                <input type="text" id="txtSend" />
+                <button type="submit" id="btnSend" value="Send" onclick="CopyToLabel()"><img
+                        src="../images/sendlogo.png" height="31" width="auto"></button>
             </div>
         </div>
     </div>
