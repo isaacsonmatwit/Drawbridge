@@ -27,7 +27,7 @@ http.listen(port, () => {
 const { auth } = require('express-openid-connect');
 
 const config = {
-  authRequired: false,
+  authRequired: true,
   auth0Logout: true,
   secret: '5JWggSs98cyBigw+ZtSsA7zQ8OhTup79YIaYH+LAOKR1TW6SFkgAyGARbGhgTyPO',
   baseURL: 'http://localhost:3000',
@@ -49,3 +49,15 @@ app.get('/profile', requiresAuth(), (req, res) => {
   res.send(JSON.stringify(req.oidc.user));
   console.log(JSON.stringify(req.oidc.user))
 });
+
+function openNav() {
+  document.getElementById("mySidebar").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+  document.getElementById("mySidebar").style.visibility = "visible";
+}
+
+function closeNav() {
+  document.getElementById("mySidebar").style.width = "0";
+  document.getElementById("main").style.marginLeft = "0";
+  document.getElementById("mySidebar").style.visibility = "hidden";
+} 
