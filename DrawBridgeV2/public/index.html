@@ -26,6 +26,7 @@
             <h1>Welcome to Drawbridge V2!</h1>
         </div>
     </div>
+
     <div id="mySidebar" class="sidebar">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <script type="text/javascript">
@@ -41,6 +42,7 @@
                 document.getElementById("mySidebar").style.visibility = "hidden";
             } 
         </script>
+
         <aside class="users">
             <ul class="userlist">
                 <li class="user top">
@@ -109,20 +111,21 @@
             <div class="messaging">
                 <ul class="area" id="messages"></ul>
                <br> 
-               <!-- WHY DOESN'T THIS <br> WORK??? -->
+<!-- WHY DOESN'T THIS <br> WORK??? -->
+                <div class="below">
                 <form class="areaIn" id="form" action="">
-                    <input id="input" autocomplete="off" />
+                    <input class="typing" id="input" autocomplete="off" />
                     <button type="submit" id="btnSend" value="Send">
                         <img src="/images/sendlogo.png" height="31" width="auto">
                     </button>
                   </form>
+                </div>
                   <script src="/socket.io/socket.io.js"></script>
             </div>
         </div>
     </div>
     <script>
         var socket = io();
-
         var messages = document.getElementById('messages');
         var form = document.getElementById('form');
         var input = document.getElementById('input');
@@ -141,7 +144,6 @@
             item.setAttribute('id','test');
             item.textContent = msg;
             messages.appendChild(item);
-            // window.scrollTo(0, document.body.scrollHeight);
             messages.scrollTo(0, document.body.scrollHeight);
         });
     </script>
