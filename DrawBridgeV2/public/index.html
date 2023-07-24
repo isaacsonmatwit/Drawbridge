@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DRAWBRIDGEV2</title>
+    <link rel="stylesheet" href="/home.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+</head>
+
+<body>
+    <div id="header" class="header">
+        <!-- used this for sidebar open and close https://www.w3schools.com/howto/howto_js_collapse_sidebar.asp -->
+        <div class="headerContainer buttons">
+            <button class="openbtn" id="openbtn" onclick="openNav()">&#9776; Open Sidebar</button>
+            <br>
+            <!-- <button class="signOutBtn" id="signOutBtn" onclick="signOutBtn()">&#10060; Signout</button> -->
+        </div>
+        <div class="headerContainer welcomeText">
+            <h1>Welcome to Drawbridge V2!</h1>
+        </div>
+    </div>
+    <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <aside class="users">
+            <ul class="userlist">
+                <li class="user top">
+                    <img src="/images/arthur.png" alt="avatar" />
+                    <div class="about">
+                        <div class="name">Arthur Morgan</div>
+                        <br>
+                        <div class="status"><i> left 10 hours ago </i></div>
+                    </div>
+
+                </li>
+                <li class="user">
+                    <img src="/images/dutch.png" alt="avatar" />
+                    <div class="about">
+                        <div class="name">Dutch Van Der Linde</div>
+                        <br>
+                        <div class="status"><i>Here now</i></div>
+                    </div>
+
+                </li>
+                <li class="user">
+                    <img src="/images/john.png" alt="avatar" />
+                    <div class="about">
+                        <div class="name">John Marston</div>
+                        <br>
+                        <div class="status"><i> left 6 hours ago</i></div>
+                    </div>
+
+                </li>
+                <li class="user">
+                    <img src="/images/micah.png" alt="avatar" />
+                    <div class="about">
+                        <div class="name">Micah Bell</div>
+                        <br>
+                        <div class="status"><i>Here now</i></div>
+                    </div>
+
+                </li>
+                <li class="user">
+                    <img src="/images/javier.png" alt="avatar" />
+                    <div class="about">
+                        <div class="name">Javier Escuella</div>
+                        <br>
+                        <div class="status"><i> left 4 hours ago </i></div>
+                    </div>
+
+                </li>
+            </ul>
+        </aside>
+    </div>
+
+    <div id="main" class="msg-main">
+        <div class="msg-header">
+            <div class="container1">
+                <img src="/images/micah.png" class="msgimg">
+                <div class="active ">
+                    <p>Micah Bell</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="msg-Send">
+            <!-- <textarea id="mytextarea" readonly></textarea> -->
+
+            <br>
+            <div class="messaging">
+                <ul id="messages"></ul>
+                <form id="form" action="">
+                    <input id="input" autocomplete="off" /><button type="submit" id="btnSend" value="Send"><img
+                        src="/images/sendlogo.png" height="31" width="auto"></button>
+                  </form>
+                  <script src="/socket.io/socket.io.js"></script>
+            </div>
+        </div>
+    </div>
+    <script>
+        var socket = io();
+
+        var messages = document.getElementById('messages');
+        var form = document.getElementById('form');
+        var input = document.getElementById('input');
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            if (input.value) {
+                socket.emit('chat message', input.value);
+                input.value = '';
+            }
+        });
+
+        socket.on('chat message', function (msg) {
+            var item = document.createElement('li');
+            item.textContent = msg;
+            messages.appendChild(item);
+            window.scrollTo(0, document.body.scrollHeight);
+        });
+    </script>
+</body>
+
+</html>
