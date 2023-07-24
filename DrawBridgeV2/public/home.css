@@ -17,14 +17,16 @@ p {
 .area li {
     color:white;
     background-color: #5f6875;
-    padding: 5px;
+    padding: 4px;
     margin-bottom:5px;
     width:fit-content;
+    border:#5f6875 1px solid;
+    border-radius: 5px; 
 }
 
 .area {
     height:200px;
-    width: 80%;
+    width: 100%;
     overflow:hidden;
     overflow-y:scroll;
 }
