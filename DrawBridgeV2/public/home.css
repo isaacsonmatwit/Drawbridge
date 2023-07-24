@@ -23,6 +23,7 @@ p {
     width:fit-content;
     border:#5f6875 1px solid;
     border-radius: 5px; 
+    font-family: Roboto Mono;
 }
 
 .area {
@@ -31,12 +32,14 @@ p {
     overflow:hidden;
     overflow-y:scroll;
 }
+
 .typing {
     height:50px;
     padding-top:15px;
     padding-bottom:10px;
     border:none;
     border-radius: 5px;
+    font-family: Roboto Mono;
 }
 
 .bar {
