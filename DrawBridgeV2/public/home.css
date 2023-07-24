@@ -18,17 +18,16 @@ p {
     color:white;
     background-color: #5f6875;
     padding: 5px;
+    margin-bottom:5px;
+    width:fit-content;
 }
 
 .area {
-    
     height:200px;
     width: 80%;
     overflow:hidden;
-    overflow-y: scroll;
+    overflow-y:scroll;
 }
-
-
 
 .bar {
     color:red;

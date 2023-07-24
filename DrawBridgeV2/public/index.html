@@ -108,9 +108,9 @@
             <br>
             <div class="messaging">
                 <ul class="area" id="messages"></ul>
-               <br>
+               <br> 
+               <!-- WHY DOESN'T THIS <br> WORK??? -->
                 <form class="areaIn" id="form" action="">
-                    
                     <input id="input" autocomplete="off" />
                     <button type="submit" id="btnSend" value="Send">
                         <img src="/images/sendlogo.png" height="31" width="auto">
@@ -138,9 +138,11 @@
         socket.on('chat message', function (msg) {
             var item = document.createElement('li');
             item.classList.add('bar');
+            item.setAttribute('id','test');
             item.textContent = msg;
             messages.appendChild(item);
-            window.scrollTo(0, document.body.scrollHeight);
+            // window.scrollTo(0, document.body.scrollHeight);
+            messages.scrollTo(0, test.scrollHeight);
         });
     </script>
 </body>
