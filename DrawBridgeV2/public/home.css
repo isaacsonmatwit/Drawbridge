@@ -6,6 +6,12 @@ body {
     color: white;
 }
 
+header {
+    background-color: #14171d;
+    padding-bottom:25px;
+    margin-bottom:25px;
+}
+
 p {
     font-family: Roboto Mono;
 }
@@ -31,6 +37,7 @@ p {
     width: 100%;
     overflow:hidden;
     overflow-y:scroll;
+    overflow-wrap: break-word;
 }
 
 .typing {
@@ -40,10 +47,8 @@ p {
     border:none;
     border-radius: 5px;
     font-family: Roboto Mono;
-}
-
-.bar {
-    color:red;
+    overflow: scroll;
+    overflow-y: hidden;
 }
 
 li {
@@ -113,7 +118,7 @@ aside {
 .user:hover {
     background-color: #3d4451;
 }
-
+ 
 dialog {
     visibility: hidden;
     transform: translate(17em,-.4em);
@@ -200,6 +205,8 @@ hr {
 
 h1 {
     text-align: center;
+    padding:0;
+    margin:0;
 }
 
 .msgimg {
@@ -242,6 +249,8 @@ h1 {
 .messaging {
     display:flex;
     align-items:center;
+    
+    overflow-wrap:break-word;
 }
 
 .msgimg {

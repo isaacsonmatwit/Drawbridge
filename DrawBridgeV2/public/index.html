@@ -15,7 +15,7 @@
 </head>
 
 <body>
-    <div id="header" class="header">
+    <header class="header">
         <!-- used this for sidebar open and close https://www.w3schools.com/howto/howto_js_collapse_sidebar.asp -->
         <div class="headerContainer buttons">
             <button class="openbtn" id="openbtn" onclick="openNav()">&#9776; Open Sidebar</button>
@@ -25,7 +25,7 @@
         <div class="headerContainer welcomeText">
             <h1>Welcome to Drawbridge V2!</h1>
         </div>
-    </div>
+    </header>
 
     <div id="mySidebar" class="sidebar">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -106,12 +106,10 @@
 
         <div class="msg-Send">
             <!-- <textarea id="mytextarea" readonly></textarea> -->
-
             <br>
             <div class="messaging">
                 <ul class="area" id="messages"></ul>
                <br> 
-<!-- WHY DOESN'T THIS <br> WORK??? -->
                 <div class="below">
                 <form class="areaIn" id="form" action="">
                     <input class="typing" id="input" autocomplete="off" />
