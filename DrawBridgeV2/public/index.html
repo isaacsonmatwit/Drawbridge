@@ -41,15 +41,19 @@
                 document.getElementById("mySidebar").style.width = "0";
                 document.getElementById("main").style.marginLeft = "50px";
                 document.getElementById("mySidebar").style.visibility = "hidden";
-            } 
+            }         
 
-            
-        
+            function arthur() {
+                var img = document.getElementById("active");
+
+                img.src ="/images/arthur.png";
+                console.log("test");
+            }
         </script>
 
         <aside class="users">
             <ul class="userlist">
-                <li class="user top">
+                <li class="user top" onclick="arthur()">
                     <img src="/images/arthur.png" alt="avatar" />
                     <div class="about">
                         <div class="name">Arthur Morgan</div>
@@ -101,7 +105,7 @@
     <div id="main" class="msg-main">
         <div class="msg-header">
             <div class="container1">
-                <img src="/images/micah.png" class="msgimg">
+                <img id="active" src="/images/micah.png" class="msgimg">
                 <div class="active ">
                     <p>Micah Bell</p>
                 </div>

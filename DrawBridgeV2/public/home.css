@@ -112,7 +112,8 @@ aside {
 .user {
     height: 65px;
     position: relative;
-    padding: 5px;
+    width:100%;
+    transition: 0.2s;
 }
 
 .user:hover {
@@ -185,6 +186,7 @@ hr {
     background-color: #14171d;
     font-family: Roboto Mono;
     font-size: 10pt;
+    transition: 0.5s;
 }
 
 .closebtn {
@@ -307,6 +309,7 @@ h1 {
 
 .users {
     margin-top: 22px;
+    transition: 0.2s;
 }
 
 a {
