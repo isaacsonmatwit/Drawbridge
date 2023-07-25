@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DRAWBRIDGEV2</title>
     <link rel="stylesheet" href="/home.css" />
+    <script  src="bundle.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
@@ -22,7 +23,7 @@
             <br>
             <!-- <button class="signOutBtn" id="signOutBtn" onclick="signOutBtn()">&#10060; Signout</button> -->
         </div>
-        <div class="headerContainer welcomeText">
+        <div class="headerContainer welcomeText" id="welcomeText">
             <h1>Welcome to Drawbridge V2!</h1>
         </div>
     </header>
@@ -41,6 +42,9 @@
                 document.getElementById("main").style.marginLeft = "50px";
                 document.getElementById("mySidebar").style.visibility = "hidden";
             } 
+
+            
+        
         </script>
 
         <aside class="users">
@@ -122,7 +126,9 @@
             </div>
         </div>
     </div>
-    <script>
+    
+    <script >
+
         var socket = io();
         var messages = document.getElementById('messages');
         var form = document.getElementById('form');
@@ -130,17 +136,25 @@
 
         form.addEventListener('submit', function (e) {
             e.preventDefault();
+           // var cipherText = encryptClient();
+            
             if (input.value) {
-                socket.emit('chat message', input.value);
+                socket.emit('chat message', encryptClient());  
                 input.value = '';
+                console.log("encrypted message sent")
             }
+            
         });
 
-        socket.on('chat message', function (msg) {
+        socket.on('chat message', function(msg) {
             var item = document.createElement('li');
+            
             item.classList.add('bar');
             item.setAttribute('id','test');
             item.textContent = msg;
+            //console.log(item.textContent)
+            var plainText = decryptClient(item.textContent);
+            item.textContent = plainText;
             messages.appendChild(item);
             messages.scrollTo(0, document.body.scrollHeight);
         });
