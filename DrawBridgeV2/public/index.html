@@ -61,7 +61,6 @@
                   </div>
                   <div class="inbox__messages">
                     <div class="messages__history"></div>
-                    <div class="fallback"></div>
                   </div>
                 </div>
         </aside>
@@ -71,7 +70,7 @@
         <div class="msg-header">
             <div class="container1">
                 <img id="active" src="/images/micah.png" class="msgimg">
-                <div class="active ">
+                <div class="active " id="topName">
                     <p>Micah Bell</p>
                 </div>
             </div>
@@ -84,6 +83,7 @@
                 <ul class="area" id="messages"></ul>
                <br> 
                 <div class="below">
+                    <div id="fallback"></div>
                 <form class="areaIn" id="form" action="">
                     <input class="typing" id="input" autocomplete="off" />
                     <button type="submit" id="btnSend" value="Send">

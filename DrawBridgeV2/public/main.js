@@ -5,6 +5,7 @@ var socket = io();
 var messages = document.getElementById('messages');
 var form = document.getElementById('form');
 var input = document.getElementById('input');
+const fallback = document.getElementById('fallback');
 
 
 form.addEventListener('submit', function (e) {
@@ -77,3 +78,23 @@ socket.on("new user", function (data) {
 socket.on("user disconnected", function (userName) {
     document.querySelector(`.${userName}-userlist`).remove();
 });
+
+input.addEventListener("keyup", () => {
+    console.log("user typing");
+    socket.emit("typing", {
+      isTyping: input.value.length > 0,
+      nickname: userName,
+    });
+  });
+  
+
+socket.on("typing", function (data) {
+    const { isTyping, nickname } = data;
+  
+    if (!isTyping) {
+      fallback.innerHTML = "";
+      return;
+    }
+  
+    fallback.innerHTML = `<p>${nickname} is typing...</p>`;
+  });

@@ -358,3 +358,9 @@ button {
     padding:3px;
 }
 
+.inbox__people{
+    font-family: robto mono;
+    font-size: 20px;
+    margin-left: 20px;
+}
+

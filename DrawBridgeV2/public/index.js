@@ -22,6 +22,8 @@ io.on('connection', (socket) => {
     });
 });
 
+
+
 http.listen(port, () => {
     console.log(`Socket.IO server running at http://localhost:${port}/`);
 });
@@ -51,6 +53,9 @@ io.on("connection", function (socket) {
   socket.on("disconnect", () => {
     activeUsers.delete(socket.userId);
     io.emit("user disconnected", socket.userId);
+  });
+  socket.on("typing", function (data) {
+    socket.broadcast.emit("typing", data);
   });
 });
 // auth router attaches /login, /logout, and /callback routes to the baseURL
