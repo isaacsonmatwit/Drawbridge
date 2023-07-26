@@ -39,6 +39,9 @@ p {
     overflow-y:scroll;
     overflow-wrap: break-word;
 }
+.areaIn {
+    margin-bottom:15px;
+}
 
 .typing {
     height:50px;
@@ -49,6 +52,11 @@ p {
     font-family: Roboto Mono;
     overflow: scroll;
     overflow-y: hidden;
+}
+
+#fallback p {
+    margin:0;
+    display:inline;
 }
 
 li {
@@ -117,10 +125,10 @@ aside {
 }
 
 label {
-font-family: Roboto Mono;
-font-size: smaller;
-color:#5f6875;
-margin-left: 20px;
+    font-family: Roboto Mono;
+    font-size: smaller;
+    color:#5f6875;
+    margin-left: 20px;
 }
 
 h4 {
