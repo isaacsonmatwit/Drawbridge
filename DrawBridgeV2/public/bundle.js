@@ -18,8 +18,8 @@ window.encryptClient = () => {
 	console.log("Encrypted Message: " + cipherText);
     //document.getElementById("welcomeText").innerHTML = cipherText;
 
-	// var decryptedPlainText = CryptoJS.AES.decrypt(cipherText, secretKey);
-	// console.log("Decrypted Message: " + decryptedPlainText.toString(CryptoJS.enc.Utf8));
+	var decryptedPlainText = CryptoJS.AES.decrypt(cipherText, secretKey);
+	console.log("Decrypted Message: " + decryptedPlainText.toString(CryptoJS.enc.Utf8));
 
 	return cipherText.toString();
 }

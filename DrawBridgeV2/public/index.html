@@ -51,54 +51,19 @@
             }
         </script>
 
+        
+
         <aside class="users">
-            <ul class="userlist">
-                <li class="user top" onclick="arthur()">
-                    <img src="/images/arthur.png" alt="avatar" />
-                    <div class="about">
-                        <div class="name">Arthur Morgan</div>
-                        <br>
-                        <div class="status"><i> left 10 hours ago </i></div>
-                    </div>
-
-                </li>
-                <li class="user">
-                    <img src="/images/dutch.png" alt="avatar" />
-                    <div class="about">
-                        <div class="name">Dutch Van Der Linde</div>
-                        <br>
-                        <div class="status"><i>Here now</i></div>
-                    </div>
-
-                </li>
-                <li class="user">
-                    <img src="/images/john.png" alt="avatar" />
-                    <div class="about">
-                        <div class="name">John Marston</div>
-                        <br>
-                        <div class="status"><i> left 6 hours ago</i></div>
-                    </div>
-
-                </li>
-                <li class="user">
-                    <img src="/images/micah.png" alt="avatar" />
-                    <div class="about">
-                        <div class="name">Micah Bell</div>
-                        <br>
-                        <div class="status"><i>Here now</i></div>
-                    </div>
-
-                </li>
-                <li class="user">
-                    <img src="/images/javier.png" alt="avatar" />
-                    <div class="about">
-                        <div class="name">Javier Escuella</div>
-                        <br>
-                        <div class="status"><i> left 4 hours ago </i></div>
-                    </div>
-
-                </li>
-            </ul>
+            <div class="container">
+                <div class="inbox">
+                  <div class="inbox__people">
+                    <h4>Active users</h4>
+                  </div>
+                  <div class="inbox__messages">
+                    <div class="messages__history"></div>
+                    <div class="fallback"></div>
+                  </div>
+                </div>
         </aside>
     </div>
 
@@ -127,41 +92,42 @@
                   </form>
                 </div>
                   <script src="/socket.io/socket.io.js"></script>
+                  <script src="main.js"></script>
             </div>
         </div>
     </div>
     
     <script >
 
-        var socket = io();
-        var messages = document.getElementById('messages');
-        var form = document.getElementById('form');
-        var input = document.getElementById('input');
+        // var socket = io();
+        // var messages = document.getElementById('messages');
+        // var form = document.getElementById('form');
+        // var input = document.getElementById('input');
 
-        form.addEventListener('submit', function (e) {
-            e.preventDefault();
-           // var cipherText = encryptClient();
+        // form.addEventListener('submit', function (e) {
+        //     e.preventDefault();
+        //    // var cipherText = encryptClient();
             
-            if (input.value) {
-                socket.emit('chat message', encryptClient());  
-                input.value = '';
-                console.log("encrypted message sent")
-            }
+        //     if (input.value) {
+        //         socket.emit('chat message', encryptClient());  
+        //         input.value = '';
+        //         console.log("encrypted message sent")
+        //     }
             
-        });
+        // });
 
-        socket.on('chat message', function(msg) {
-            var item = document.createElement('li');
+        // socket.on('chat message', function(msg) {
+        //     var item = document.createElement('li');
             
-            item.classList.add('bar');
-            item.setAttribute('id','test');
-            item.textContent = msg;
-            //console.log(item.textContent)
-            var plainText = decryptClient(item.textContent);
-            item.textContent = plainText;
-            messages.appendChild(item);
-            messages.scrollTo(0, document.body.scrollHeight);
-        });
+        //     item.classList.add('bar');
+        //     item.setAttribute('id','test');
+        //     item.textContent = msg;
+        //     //console.log(item.textContent)
+        //     var plainText = decryptClient(item.textContent);
+        //     item.textContent = plainText;
+        //     messages.appendChild(item);
+        //     messages.scrollTo(0, document.body.scrollHeight);
+        // });
     </script>
 </body>
 

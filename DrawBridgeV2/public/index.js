@@ -1,3 +1,5 @@
+//server side javascript
+//==================================================
 
 const cwd = process.cwd();
 const express = require(cwd + '/node_modules/express');
@@ -34,7 +36,23 @@ const config = {
     clientID: 'dlgjMBh6ROXYiTyZy8tW6VkOpwAphB4M',
     issuerBaseURL: 'https://dev-6c8dnubymkkxrng8.us.auth0.com'
 };
+const activeUsers = new Set();
 
+io.on("connection", function (socket) {
+  console.log("new socket connection initialized");
+
+  socket.on("new user", function (data) {
+    socket.userId = data;
+    activeUsers.add(data);
+    io.emit("new user", [...activeUsers]);
+    console.log("user " + data + " made a socket connection");
+  });
+
+  socket.on("disconnect", () => {
+    activeUsers.delete(socket.userId);
+    io.emit("user disconnected", socket.userId);
+  });
+});
 // auth router attaches /login, /logout, and /callback routes to the baseURL
 app.use(auth(config));
 
