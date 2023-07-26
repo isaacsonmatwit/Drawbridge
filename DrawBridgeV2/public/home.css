@@ -116,6 +116,20 @@ aside {
     transition: 0.2s;
 }
 
+label {
+font-family: Roboto Mono;
+font-size: smaller;
+color:#5f6875;
+margin-left: 20px;
+}
+
+h4 {
+    font-family: Roboto Mono;
+}
+
+h5 {
+    font-family: Roboto Mono;
+}
 .user:hover {
     background-color: #3d4451;
 }
